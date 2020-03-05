@@ -17,12 +17,41 @@ class Shop extends Component {
             skirt: 4,
         }
     }
+    removeProduct = (productName) => {
+        const oldProductCount = this.state.products[productName];
+        if (oldProductCount===0){
+            return;
+        }
+        const newProductCount =  oldProductCount - 1;
+        const products = {
+            ...this.state.products
+        }
+        products[productName] = newProductCount
+        this.setState({
+            products: products
+        })
+    }
+    addProduct = (productName) => {
+        const oldProductCount = this.state.products[productName];
+        const newProductCount =  oldProductCount + 1
+        const products = {
+            ...this.state.products
+        }
+        products[productName] = newProductCount
+        this.setState({
+            products: products
+        })
+    }
+   
     render () {
-        
         return (
             <div>
                 <h1>Shop</h1>
-                <Products products={this.state.products} productImages={productImages}/>
+                <Products 
+                    products={this.state.products} 
+                    productImages={productImages}
+                    removeProduct={this.removeProduct}
+                    addProduct={this.addProduct}/>
             </div>
         )
     }

@@ -6,7 +6,13 @@ import { Row, Col, Card,Icon, CardTitle, Button } from 'react-materialize'
 const products = (props) => {
     let products = Object.keys(props.products).map(productKey => {
         return (
-        <Product key={productKey} productName={productKey} productQuantity={props.products[productKey]} productImages={props.productImages[productKey]}/>
+        <Product 
+            key={productKey} 
+            productName={productKey} 
+            productQuantity={props.products[productKey]} 
+            productImages={props.productImages[productKey]}
+            removeProduct={props.removeProduct}
+            addProduct={props.addProduct}/>
         )
     })
     return (
