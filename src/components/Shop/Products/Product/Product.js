@@ -1,6 +1,6 @@
 import React from 'react';
-import { Col, Card,Icon, CardTitle, Button } from 'react-materialize'
-
+import { Col, Card, CardTitle, Icon} from 'react-materialize';
+import ButtonUI from '../../../UI/Button/Button';
 
 const product = (props) => {
     const productName = props.productName.charAt(0).toUpperCase() + props.productName.slice(1)
@@ -12,16 +12,29 @@ const product = (props) => {
                 <Card
                 className="Card"
                 actions={[
-                    <div>
-                        <Button node="button" className='teal lighten-3' onClick={() => props.addProduct(props.productName)} small style={{ marginRight: '5px' }}  waves="light" > <Icon>add</Icon> </Button>
-                        <Button node="button" className='red lighten-3' onClick={() => props.removeProduct(props.productName)} small style={{ marginRight: '5px' }}  waves="light" > <Icon>remove</Icon> </Button>
-                    </div>
+                        <span key='1'>
+                            <ButtonUI
+                                ClassName = 'teal lighten-3'
+                                clicked = {() => props.addProduct(props.productName)}
+                                textOrIcon = 'add'
+                            ></ButtonUI>
+                        </span>,
+                        <span key='2'>
+                            <ButtonUI
+                                ClassName = 'red lighten-3'
+                                clicked = {() => props.removeProduct(props.productName)}
+                                textOrIcon = 'remove'
+                            ></ButtonUI>
+                        </span>
                 ]}
+                closeIcon={<Icon>close</Icon>}
+                revealIcon={<Icon>more_vert</Icon>}
                 header={<CardTitle image={props.productImages} />}
                 horizontal
                 >
                 <h3>{productName}</h3>
                 <p>Quantity: {props.productQuantity}</p>
+                <p>Price: {props.productPrices}$</p>
                 </Card>
             </Col>
             

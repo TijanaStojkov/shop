@@ -3,6 +3,12 @@
 .Card {
     h3 {
         color: $primaryColor;
-        margin-top: 0
+        margin-top: 0;
     }
+}
+h1, h3 {
+    font-family: 'Permanent Marker', cursive;
+}
+h1{
+    text-align: center;
 }

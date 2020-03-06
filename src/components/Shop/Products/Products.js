@@ -1,6 +1,6 @@
 import React from 'react';
 import Product from './Product/Product';
-import { Row, Col, Card,Icon, CardTitle, Button } from 'react-materialize'
+import { Row } from 'react-materialize'
 
 
 const products = (props) => {
@@ -11,6 +11,7 @@ const products = (props) => {
             productName={productKey} 
             productQuantity={props.products[productKey]} 
             productImages={props.productImages[productKey]}
+            productPrices={props.productPrices[productKey]}
             removeProduct={props.removeProduct}
             addProduct={props.addProduct}/>
         )
