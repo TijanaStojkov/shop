@@ -8,6 +8,7 @@ import skirt from '../../assets/images/products/skirt.jpg';
 import Spinner from '../UI/Spinner/Spinner';
 import Products from './Products//Products';
 import Modal from '../UI/Modal/Modal';
+import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler'
 
 const PRODUCTS_IMAGES = {
     shert: shert,
@@ -25,6 +26,7 @@ class Shop extends Component {
         products: null,
         totalPrice: 0,
         orderable: false,
+        errorMessage: ""
     }
     removeProduct = (productName) => {
         //count
@@ -84,8 +86,36 @@ class Shop extends Component {
                 products: resp.data
             })
         })
+        .catch(error => {
+            this.setState({
+                errorMessage: "Network error get"
+            })
+        })
     }
-   
+    order = () => {
+        const products = {
+        products: this.state.products,
+        price: this.state.totalPrice,
+            customer: {
+                name: 'Tijana Stojkov',
+                address: {
+                    street: "Njegoseva",
+                    zipCode: "23000",
+                    country: "Greece",
+                },
+            },
+            deliveryMethod: 'fast'
+        }
+        axios.post('https://e-commerce-5e72e.firebaseio.com/order.json', products)
+        .then(responce => {
+            console.log(responce)
+        })
+        .catch(error => {
+            this.setState({
+                errorMessage: "Network error post",
+            })
+        })
+    }
     render () {
         const productsComponent = this.state.products?  <Products 
         products={this.state.products} 
@@ -97,13 +127,17 @@ class Shop extends Component {
             <div>
                 <h1>Our shop</h1>
                 {productsComponent}
+                <p>{this.state.errorMessage}</p>
                 <Modal 
                     products={this.state.products}
                     totalPrice={this.state.totalPrice}
-                    orderable={this.state.orderable}/>
+                    orderable={this.state.orderable}
+                    order={this.order}
+                    products={this.state.products}
+                    />
             </div>
         )
     }
 }
 
-export default Shop;
+export default withErrorHandler(Shop,axios);
