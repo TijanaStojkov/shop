@@ -23,7 +23,8 @@ const PRODUCTS_PRICES = {
 class Shop extends Component {
     state = {
         products: null,
-        totalPrice: 0
+        totalPrice: 0,
+        orderable: false,
     }
     removeProduct = (productName) => {
         //count
@@ -44,6 +45,7 @@ class Shop extends Component {
             products: products,
             totalPrice: newTotalPrice
         })
+        this.updatePurchasable(products);
     }
     addProduct = (productName) => {
         //count
@@ -60,6 +62,19 @@ class Shop extends Component {
         this.setState({
             products: products,
             totalPrice: newTotalPrice
+        })
+        this.updatePurchasable(products);
+    }
+    updatePurchasable = (products) => {
+        const sum = Object.keys(products)
+        .map(productKey =>{
+            return products[productKey]
+        })
+        .reduce((first, next) => {
+            return first + next
+        },0)
+            this.setState({
+                orderable: sum>0
         })
     }
     componentDidMount () {
@@ -84,7 +99,8 @@ class Shop extends Component {
                 {productsComponent}
                 <Modal 
                     products={this.state.products}
-                    totalPrice={this.state.totalPrice}/>
+                    totalPrice={this.state.totalPrice}
+                    orderable={this.state.orderable}/>
             </div>
         )
     }

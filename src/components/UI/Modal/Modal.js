@@ -26,7 +26,7 @@ const modal = (props) => (
             preventScrolling: true,
             startingTop: '4%'
         }}
-        trigger={<Button node="button">Order summary</Button>}
+        trigger={<Button node="button" disabled={!props.orderable}>Order summary</Button>}
         >
         <p>
             <OrderSummary 
