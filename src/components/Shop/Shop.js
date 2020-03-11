@@ -8,7 +8,8 @@ import skirt from '../../assets/images/products/skirt.jpg';
 import Spinner from '../UI/Spinner/Spinner';
 import Products from './Products//Products';
 import Modal from '../UI/Modal/Modal';
-import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler'
+import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
+import OrderSummary from './OrderSummary/OrderSummary'
 
 const PRODUCTS_IMAGES = {
     shert: shert,
@@ -123,6 +124,14 @@ class Shop extends Component {
         productPrices={PRODUCTS_PRICES}
         removeProduct={this.removeProduct}
         addProduct={this.addProduct}/>:<Spinner/>
+        let ordeSummary = null;
+        if (this.state.products){
+            ordeSummary = 
+            <OrderSummary 
+                products={this.state.products}
+                totalPrice={this.state.totalPrice}
+            />
+        }
         return (
             <div>
                 <h1>Our shop</h1>
@@ -133,8 +142,9 @@ class Shop extends Component {
                     totalPrice={this.state.totalPrice}
                     orderable={this.state.orderable}
                     order={this.order}
-                    products={this.state.products}
-                    />
+                >
+                    {ordeSummary}
+                </Modal>
             </div>
         )
     }

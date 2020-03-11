@@ -1,21 +1,20 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
-import Spinner from '../../UI/Spinner/Spinner'
 
-const orderSummary = (props) => {
-
-    const productsList = props.products? Object.keys(props.products).map(productKey => {
-        return <li><span style={{textTransform: 'capitalize'}}>{productKey}</span>: {props.products[productKey]}</li>
-    }):<Spinner/>
-
-    return (
-        <Aux>
+class orderSummary extends Component {
+    render(){
+        const productsList = this.props.products?Object.keys(this.props.products).map(productKey => {
+            return <li key={productKey}><span style={{textTransform: 'capitalize'}}>{productKey}</span>: {this.props.products[productKey]}</li>
+        }): ""
+        return(
+            <Aux>
             <ul>
                 {productsList}
             </ul>
-            <p>Total price: {props.totalPrice.toFixed(2)}$</p>
+            <p>Total price: {this.props.totalPrice.toFixed(2)}$</p>
         </Aux>
-    )
+        )
+    }
 }
     
 export default orderSummary;

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-materialize';
-import OrderSummary from '../../Shop/OrderSummary/OrderSummary'
 
 class ModalComponent extends Component {
-    componentDidUpdate () {
-        console.log(this.props.order)
-    }
     shouldComponentUpdate (nextProps, nextState) {
-        return (this.props.orderable !== nextProps.orderable || this.props.products !== nextProps.products)
+        return (this.props.orderable !== nextProps.orderable || this.props.children !== nextProps.children)
     }
     
     render () {
@@ -36,12 +32,9 @@ class ModalComponent extends Component {
             }}
             trigger={<Button node="button" disabled={!this.props.orderable} onClick={this.props.updateModalComponentHandler}>Order summary</Button>}
             >
-            <p>
-                <OrderSummary 
-                products={this.props.products}
-                totalPrice={this.props.totalPrice}
-                />
-            </p>
+            <div>
+                {this.props.children}
+            </div>
         </Modal>
         )
     }
