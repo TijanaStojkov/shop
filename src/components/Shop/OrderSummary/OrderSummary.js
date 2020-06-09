@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
+import util from '../../hoc/Currency/Currency'
 
 class orderSummary extends Component {
     render(){
@@ -11,7 +12,7 @@ class orderSummary extends Component {
             <ul>
                 {productsList}
             </ul>
-            <p>Total price: {this.props.totalPrice.toFixed(2)}$</p>
+            <p>Total price: {util.formatCurrency(this.props.totalPrice)}</p>
         </Aux>
         )
     }

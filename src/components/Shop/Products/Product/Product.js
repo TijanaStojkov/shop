@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Card, CardTitle, Icon} from 'react-materialize';
 import ButtonUI from '../../../UI/Button/Button';
+import util from '../../../hoc/Currency/Currency'
 
 const product = (props) => {
     const productName = props.productName.charAt(0).toUpperCase() + props.productName.slice(1)
@@ -34,7 +35,7 @@ const product = (props) => {
                 >
                 <h3>{productName}</h3>
                 <p>Quantity: {props.productQuantity}</p>
-                <p>Price: {props.productPrices}$</p>
+                <p>Price: {util.formatCurrency(props.productPrices)}</p>
                 </Card>
             </Col>
             

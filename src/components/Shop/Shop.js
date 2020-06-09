@@ -86,6 +86,7 @@ class Shop extends Component {
             this.setState({
                 products: resp.data
             })
+            console.log(resp)
         })
         .catch(error => {
             this.setState({
