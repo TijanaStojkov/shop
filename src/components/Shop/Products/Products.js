@@ -12,6 +12,7 @@ const products = (props) => {
             productQuantity={props.products[productKey]} 
             productImages={props.productImages[productKey]}
             productPrices={props.productPrices[productKey]}
+            productSizes={props.productSizes[productKey]}
             removeProduct={props.removeProduct}
             addProduct={props.addProduct}/>
         )

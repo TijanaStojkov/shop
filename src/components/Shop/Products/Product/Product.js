@@ -5,6 +5,9 @@ import util from '../../../hoc/Currency/Currency'
 
 const product = (props) => {
     const productName = props.productName.charAt(0).toUpperCase() + props.productName.slice(1)
+    const sizes = props.productSizes.map((size,index) =>
+        (index+1===props.productSizes.length)?size : size +', '
+    )
     return (
             <Col
                 m={12}
@@ -36,6 +39,7 @@ const product = (props) => {
                 <h3>{productName}</h3>
                 <p>Quantity: {props.productQuantity}</p>
                 <p>Price: {util.formatCurrency(props.productPrices)}</p>
+                <p>Sizes: {sizes}</p>
                 </Card>
             </Col>
             

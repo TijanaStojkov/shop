@@ -9,7 +9,8 @@ import Spinner from '../UI/Spinner/Spinner';
 import Products from './Products//Products';
 import Modal from '../UI/Modal/Modal';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
-import OrderSummary from './OrderSummary/OrderSummary'
+import OrderSummary from './OrderSummary/OrderSummary';
+import Filter from '../UI/Filter/Filter'
 
 const PRODUCTS_IMAGES = {
     shert: shert,
@@ -21,13 +22,20 @@ const PRODUCTS_PRICES = {
     pants: 4.3,
     skirt: 5.4,
 }
+const PRODUCTS_SIZES = {
+    shert: ["X", "L", "XL", "XXL"],
+    pants: ["X", "M", "XL"],
+    skirt: ["S", "X", "XXL"],
+}
 
 class Shop extends Component {
     state = {
         products: null,
+        filterProductsList: null,
         totalPrice: 0,
         orderable: false,
-        errorMessage: ""
+        errorMessage: "",
+        size: ''
     }
     removeProduct = (productName) => {
         //count
@@ -46,7 +54,10 @@ class Shop extends Component {
  
         this.setState({
             products: products,
+            filterProductsList: products,
             totalPrice: newTotalPrice
+        }, function(){
+            this.listProducts()
         })
         this.updatePurchasable(products);
     }
@@ -64,9 +75,13 @@ class Shop extends Component {
 
         this.setState({
             products: products,
+            filterProductsList: products,
             totalPrice: newTotalPrice
+        }, function(){
+            this.listProducts()
         })
         this.updatePurchasable(products);
+        
     }
     updatePurchasable = (products) => {
         const sum = Object.keys(products)
@@ -76,17 +91,17 @@ class Shop extends Component {
         .reduce((first, next) => {
             return first + next
         },0)
-            this.setState({
-                orderable: sum>0
+        this.setState({
+            orderable: sum>0
         })
     }
     componentDidMount () {
         axios.get('https://e-commerce-5e72e.firebaseio.com/products.json')
         .then(resp =>{
             this.setState({
-                products: resp.data
+                products: resp.data,
+                filterProductsList: resp.data
             })
-            console.log(resp)
         })
         .catch(error => {
             this.setState({
@@ -118,24 +133,54 @@ class Shop extends Component {
             })
         })
     }
+    filterSize = (e) => {
+        this.setState({
+            size: e.target.value
+        }, function () {
+            this.listProducts()
+        })
+    }
+    listProducts = () => {
+        if(this.state.size!==''){
+            const selected = this.state.size;
+            var filterProductsList = {...this.state.products};
+            Object.keys(PRODUCTS_SIZES).forEach(element => {
+                if(PRODUCTS_SIZES[element].indexOf(selected.toUpperCase())<0){
+                delete filterProductsList[element]
+                }
+            });
+            this.setState({
+                filterProductsList: filterProductsList
+            })
+        }
+    }
     render () {
         const productsComponent = this.state.products?  <Products 
-        products={this.state.products} 
+        products={this.state.filterProductsList} 
+        filterProductsList={this.state.filterProductsList}
         productImages={PRODUCTS_IMAGES}
         productPrices={PRODUCTS_PRICES}
+        productSizes={PRODUCTS_SIZES}
         removeProduct={this.removeProduct}
         addProduct={this.addProduct}/>:<Spinner/>
         let ordeSummary = null;
+        let filterProducts = null;
         if (this.state.products){
             ordeSummary = 
             <OrderSummary 
                 products={this.state.products}
                 totalPrice={this.state.totalPrice}
             />
+            filterProducts =
+            <Filter
+                size={this.state.size}
+                filterSize={this.filterSize}
+            />
         }
         return (
             <div>
                 <h1>Our shop</h1>
+                {filterProducts}
                 {productsComponent}
                 <p>{this.state.errorMessage}</p>
                 <Modal 
