@@ -3,7 +3,7 @@ import Aux from '../../hoc/Auxilary/Auxilary';
 import Products from '../Products/Products'
 
 
-const OrderComponent = (props) => {
+const CheckoutSummary = (props) => {
         return(
             <Aux>
                 <Products 
@@ -16,4 +16,4 @@ const OrderComponent = (props) => {
             </Aux>
         )
 }
-export default OrderComponent;
+export default CheckoutSummary;
