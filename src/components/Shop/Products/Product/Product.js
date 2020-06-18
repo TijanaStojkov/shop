@@ -15,7 +15,7 @@ const product = (props) => {
             >
                 <Card
                 className="Card"
-                actions={[
+                actions={!props.order &&[
                         <span key='1'>
                             <ButtonUI
                                 ClassName = 'teal lighten-3'
@@ -36,7 +36,8 @@ const product = (props) => {
                 header={<CardTitle image={props.productImages} />}
                 horizontal
                 >
-                <h3>{productName}</h3>
+                <h3>{props.productName}</h3>
+                <h3>{props.order}</h3>
                 <p>Quantity: {props.productQuantity}</p>
                 <p>Price: {util.formatCurrency(props.productPrices)}</p>
                 <p>Sizes: {sizes}</p>

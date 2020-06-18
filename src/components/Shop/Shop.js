@@ -10,7 +10,8 @@ import Products from './Products//Products';
 import Modal from '../UI/Modal/Modal';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import OrderSummary from './OrderSummary/OrderSummary';
-import Filter from '../UI/Filter/Filter'
+import Filter from '../UI/Filter/Filter';
+import OrderComponent from '../Shop/Order/Order';
 
 const PRODUCTS_IMAGES = {
     shert: shert,
@@ -35,7 +36,8 @@ class Shop extends Component {
         totalPrice: 0,
         orderable: false,
         errorMessage: "",
-        size: ''
+        size: '',
+        order:true
     }
     removeProduct = (productName) => {
         //count
@@ -163,6 +165,14 @@ class Shop extends Component {
         productSizes={PRODUCTS_SIZES}
         removeProduct={this.removeProduct}
         addProduct={this.addProduct}/>:<Spinner/>
+        const orderComponent = this.state.products?  <OrderComponent
+        order={this.state.order}
+        products={this.state.filterProductsList} 
+        filterProductsList={this.state.filterProductsList}
+        productImages={PRODUCTS_IMAGES}
+        productPrices={PRODUCTS_PRICES}
+        productSizes={PRODUCTS_SIZES}
+        />:<Spinner/>
         let ordeSummary = null;
         let filterProducts = null;
         if (this.state.products){
@@ -182,6 +192,7 @@ class Shop extends Component {
                 <h1>Our shop</h1>
                 {filterProducts}
                 {productsComponent}
+                {orderComponent}
                 <p>{this.state.errorMessage}</p>
                 <Modal 
                     products={this.state.products}
