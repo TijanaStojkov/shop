@@ -112,7 +112,16 @@ class Shop extends Component {
         })
     }
     orderHandler = () => {
-        this.props.history.push('/checkout')
+        const queryParams = [];
+        for (let i in this.state.products){
+            queryParams.push(i + '=' + this.state.products[i])
+        }
+        const queryString = queryParams.join('&')
+        //this.props.history.push('/checkout')
+        this.props.history.push({
+            pathname:'/checkout',
+            search: '?' + queryString
+        })
         /*const products = {
         products: this.state.products,
         price: this.state.totalPrice,

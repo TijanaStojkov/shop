@@ -9,6 +9,7 @@ import ButtonUI from '../../UI/Button/Button';
 import shert from '../../../assets/images/products/shert.jpg';
 import pants from '../../../assets/images/products/pants.jpg';
 import skirt from '../../../assets/images/products/skirt.jpg';
+import product from '../Products/Product/Product';
 
 const PRODUCTS_IMAGES = {
     shert: shert,
@@ -27,9 +28,9 @@ const PRODUCTS_SIZES = {
 }
 
 class Checkout extends Component{
+    
     state = {
-        products: null,
-        filterProductsList: {
+        products: {
             pants:0,
             shert:1,
             skirt:4
@@ -39,6 +40,16 @@ class Checkout extends Component{
         errorMessage: "",
         size: '',
         order:true
+    }
+    componentDidMount(){
+        const query = new URLSearchParams(this.props.location.search);
+        const products = {};
+        for (let param of query.entries()){//['pants','1']
+            products[param[0]] = +param[1]
+        }
+        this.setState({
+            products: products
+        })
     }
     onCheckoutCancle = () => {
         this.props.history.goBack();
@@ -51,8 +62,7 @@ class Checkout extends Component{
             <Aux>
                 <CheckoutSummary
                     order={this.state.order}
-                    products={this.state.filterProductsList} 
-                    filterProductsList={this.state.filterProductsList}
+                    filterProductsList={this.state.products}
                     productImages={PRODUCTS_IMAGES}
                     productPrices={PRODUCTS_PRICES}
                     productSizes={PRODUCTS_SIZES}/>
