@@ -111,8 +111,9 @@ class Shop extends Component {
             })
         })
     }
-    order = () => {
-        const products = {
+    orderHandler = () => {
+        this.props.history.push('/checkout')
+        /*const products = {
         products: this.state.products,
         price: this.state.totalPrice,
             customer: {
@@ -133,8 +134,9 @@ class Shop extends Component {
             this.setState({
                 errorMessage: "Network error post",
             })
-        })
+        })*/
     }
+    
     filterSize = (e) => {
         this.setState({
             size: e.target.value
@@ -190,7 +192,7 @@ class Shop extends Component {
                     products={this.state.products}
                     totalPrice={this.state.totalPrice}
                     orderable={this.state.orderable}
-                    order={this.order}
+                    orderHandler={this.orderHandler}
                 >
                     {ordeSummary}
                 </Modal>

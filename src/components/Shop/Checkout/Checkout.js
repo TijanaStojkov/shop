@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
+
+//components
 import CheckoutSummary from './CheckoutSummary';
+import ButtonUI from '../../UI/Button/Button';
 
 //images
 import shert from '../../../assets/images/products/shert.jpg';
@@ -37,6 +40,12 @@ class Checkout extends Component{
         size: '',
         order:true
     }
+    onCheckoutCancle = () => {
+        this.props.history.goBack();
+    }
+    onCheckoutContinue = () => {
+        this.props.history.replace('/checkout/contact-data')
+    }
     render(){
         return(
             <Aux>
@@ -47,6 +56,8 @@ class Checkout extends Component{
                     productImages={PRODUCTS_IMAGES}
                     productPrices={PRODUCTS_PRICES}
                     productSizes={PRODUCTS_SIZES}/>
+                    <ButtonUI ClassName = 'red lighten-3' clicked={this.onCheckoutCancle} text='Cancle' textOrIcon=''></ButtonUI>
+                    <ButtonUI ClassName = 'green lighten-3' clicked={this.onCheckoutContinue} text = 'Continue' textOrIcon=''/>
             </Aux>
         )
     }

@@ -10,7 +10,7 @@ const button = (props) => (
         waves="light" 
         className={props.ClassName}
         onClick={props.clicked} 
-        > <Icon>{props.textOrIcon}</Icon> </Button>
+        > <Icon>{props.textOrIcon}</Icon>{props.text} </Button>
 )
 
 export default button;

@@ -11,7 +11,7 @@ class ModalComponent extends Component {
         <Modal
             actions={[
                 <span key='1'><Button flat modal="close" node="button" waves="green">Close</Button></span>,
-                <span key='2'><Button flat modal="close" node="button" waves="green" onClick={this.props.order}>Order</Button></span>
+                <span key='2'><Button flat modal="close" node="button" waves="green" onClick={this.props.orderHandler}>Order</Button></span>
             ]}
             bottomSheet={false}
             fixedFooter={false}

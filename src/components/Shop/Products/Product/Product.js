@@ -8,6 +8,22 @@ const product = (props) => {
     const sizes = props.productSizes.map((size,index) =>
         (index+1===props.productSizes.length)?size : size +', '
     )
+    const actionButtons = !props.order?[
+        <span key='1'>
+            <ButtonUI
+                ClassName = 'teal lighten-3'
+                clicked = {() => props.addProduct(props.productName)}
+                textOrIcon = 'add'
+            ></ButtonUI>
+        </span>,
+        <span key='2'>
+            <ButtonUI
+                ClassName = 'red lighten-3'
+                clicked = {() => props.removeProduct(props.productName)}
+                textOrIcon = 'remove'
+            ></ButtonUI>
+        </span>
+]:null
     return (
             <Col
                 m={12}
@@ -15,22 +31,7 @@ const product = (props) => {
             >
                 <Card
                 className="Card"
-                actions={!props.order &&[
-                        <span key='1'>
-                            <ButtonUI
-                                ClassName = 'teal lighten-3'
-                                clicked = {() => props.addProduct(props.productName)}
-                                textOrIcon = 'add'
-                            ></ButtonUI>
-                        </span>,
-                        <span key='2'>
-                            <ButtonUI
-                                ClassName = 'red lighten-3'
-                                clicked = {() => props.removeProduct(props.productName)}
-                                textOrIcon = 'remove'
-                            ></ButtonUI>
-                        </span>
-                ]}
+                actions={actionButtons}
                 closeIcon={<Icon>close</Icon>}
                 revealIcon={<Icon>more_vert</Icon>}
                 header={<CardTitle image={props.productImages} />}
