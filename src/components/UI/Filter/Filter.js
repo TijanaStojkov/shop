@@ -1,6 +1,7 @@
 import React from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
 import { Select, Row, Col, Label } from 'react-materialize';
+import './Filter.css'
 
 const filter = (props) => (
     <Aux>
