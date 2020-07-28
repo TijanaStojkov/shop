@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
+import { Route } from 'react-router-dom'
 
 //components
 import CheckoutSummary from './CheckoutSummary';
-import ButtonUI from '../../UI/Button/Button';
+import CheckoutData from '../Checkout/ContactData/ContactData'
 
 //images
 import shert from '../../../assets/images/products/shert.jpg';
@@ -43,6 +44,7 @@ class Checkout extends Component{
     }
     componentDidMount(){
         const query = new URLSearchParams(this.props.location.search);
+        console.log(query)
         const products = {};
         for (let param of query.entries()){//['pants','1']
             products[param[0]] = +param[1]
@@ -65,9 +67,14 @@ class Checkout extends Component{
                     filterProductsList={this.state.products}
                     productImages={PRODUCTS_IMAGES}
                     productPrices={PRODUCTS_PRICES}
-                    productSizes={PRODUCTS_SIZES}/>
-                    <ButtonUI ClassName = 'red lighten-3' clicked={this.onCheckoutCancle} text='Cancle' textOrIcon=''></ButtonUI>
-                    <ButtonUI ClassName = 'green lighten-3' clicked={this.onCheckoutContinue} text = 'Continue' textOrIcon=''/>
+                    productSizes={PRODUCTS_SIZES}
+                    onCheckoutCancle={this.onCheckoutCancle}
+                    onCheckoutContinue={this.onCheckoutContinue}
+                    />
+                    <Route 
+                        path={this.props.match.path + '/contact-data'} 
+                        render={() => (<CheckoutData products={this.state.products}/>)}
+                        />
             </Aux>
         )
     }
