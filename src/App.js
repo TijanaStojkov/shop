@@ -9,7 +9,7 @@ import Layout from './components/Layout/Layout';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/shop">
       <Layout/>
     </BrowserRouter>
       
