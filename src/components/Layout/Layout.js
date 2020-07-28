@@ -10,8 +10,8 @@ const layout = () => {
   return (
     <div>
       <Navbar/>
-      <Route exact path='/' component={Shop}/>
-      <Route path='/checkout' component={Checkout}/>
+      <Route exact path={'/'} component={Shop}/>
+      <Route path={'/checkout'} component={Checkout}/>
     </div>
   );
 }
