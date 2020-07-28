@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 //components
 import Navbar from '../Navbar/Navbar';
@@ -10,8 +10,10 @@ const layout = () => {
   return (
     <div>
       <Navbar/>
-      <Route exact path={'/'} component={Shop}/>
-      <Route path={'/checkout'} component={Checkout}/>
+      <Switch>
+        <Route exact path={'/'} component={Shop}/>
+        <Route path={'/checkout'} component={Checkout}/>
+      </Switch>
     </div>
   );
 }
