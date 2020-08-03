@@ -46,11 +46,17 @@ class Checkout extends Component{
         const query = new URLSearchParams(this.props.location.search);
         console.log(query)
         const products = {};
+        var totalPrice = 0;
         for (let param of query.entries()){//['pants','1']
-            products[param[0]] = +param[1]
+            if(param[0]==='price'){
+                totalPrice = param[1]
+            }else{
+                products[param[0]] = +param[1]
+            } 
         }
         this.setState({
-            products: products
+            products: products,
+            totalPrice: totalPrice
         })
     }
     onCheckoutCancle = () => {
@@ -73,7 +79,7 @@ class Checkout extends Component{
                     />
                     <Route 
                         path={this.props.match.path + '/contact-data'} 
-                        render={() => (<CheckoutData products={this.state.products}/>)}
+                        render={() => (<CheckoutData products={this.state.products} totalPrice={this.state.totalPrice}/>)}
                         />
             </Aux>
         )

@@ -116,35 +116,14 @@ class Shop extends Component {
         for (let i in this.state.products){
             queryParams.push(i + '=' + this.state.products[i])
         }
+        queryParams.push('price=' + this.state.totalPrice)
         const queryString = queryParams.join('&')
         //this.props.history.push('/checkout')
         this.props.history.push({
             pathname:'/checkout',
             search: '?' + queryString
         })
-        /*const products = {
-        products: this.state.products,
-        price: this.state.totalPrice,
-            customer: {
-                name: 'Tijana Stojkov',
-                address: {
-                    street: "Njegoseva",
-                    zipCode: "23000",
-                    country: "Greece",
-                },
-            },
-            deliveryMethod: 'fast'
-        }
-        axios.post('https://e-commerce-5e72e.firebaseio.com/order.json', products)
-        .then(responce => {
-            console.log(responce)
-        })
-        .catch(error => {
-            this.setState({
-                errorMessage: "Network error post",
-            })
-        })*/
-    }
+       }
     
     filterSize = (e) => {
         this.setState({
