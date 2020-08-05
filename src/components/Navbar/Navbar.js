@@ -1,5 +1,7 @@
 import React from 'react';
-import { Navbar, Icon, NavItem } from 'react-materialize'
+import { Navbar, Icon, NavItem } from 'react-materialize';
+import { NavLink } from 'react-router-dom';
+import './Navbar.scss'
 
 const nav = () => {
     return (
@@ -20,12 +22,8 @@ const nav = () => {
                 preventScrolling: true
             }}
             >
-            <NavItem onClick={function noRefCheck(){}}>
-                Getting started
-            </NavItem>
-            <NavItem href="components.html">
-                Components
-            </NavItem>
+                <NavLink to='/' exact><NavItem >Shop</NavItem></NavLink>
+                <NavLink to='/Orders'><NavItem >Orders</NavItem></NavLink>
         </Navbar>
     )
 }

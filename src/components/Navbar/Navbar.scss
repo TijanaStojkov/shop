@@ -1,0 +1,5 @@
+@import '../../assets/scss/variables.scss';
+
+.hide-on-med-and-down a.active {
+    background-color: $primaryColor !important;
+}
