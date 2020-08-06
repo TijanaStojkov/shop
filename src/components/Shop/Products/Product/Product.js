@@ -4,7 +4,6 @@ import ButtonUI from '../../../UI/Button/Button';
 import util from '../../../hoc/Currency/Currency'
 
 const product = (props) => {
-    const productName = props.productName.charAt(0).toUpperCase() + props.productName.slice(1)
     const sizes = props.productSizes.map((size,index) =>
         (index+1===props.productSizes.length)?size : size +', '
     )

@@ -10,7 +10,6 @@ import CheckoutData from '../Checkout/ContactData/ContactData'
 import shert from '../../../assets/images/products/shert.jpg';
 import pants from '../../../assets/images/products/pants.jpg';
 import skirt from '../../../assets/images/products/skirt.jpg';
-import product from '../Products/Product/Product';
 
 const PRODUCTS_IMAGES = {
     shert: shert,

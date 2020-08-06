@@ -1,49 +1,33 @@
-import React, { Component } from 'react';
-import Aux from '../../../hoc/Auxilary/Auxilary';
-import {CollapsibleItem, Icon, Collapsible } from 'react-materialize'
+import React from 'react';
+import { CollapsibleItem } from 'react-materialize';
+import util from '../../../hoc/Currency/Currency'
 
-
-class Order extends Component {
-    render() {
-        return (
-            <Aux>
-                <Collapsible
-                    accordion
-                    popout
-                    >
-                    <CollapsibleItem
-                        expanded={false}
-                        header="Order 1"
-                        node="div"
-                    >
-                        Details
-                    </CollapsibleItem>
-                    <CollapsibleItem
-                        expanded={false}
-                        header="Order 2"
-                        node="div"
-                    >
-                        Details
-                    </CollapsibleItem>
-                    <CollapsibleItem
-                        expanded={false}
-                        header="Order 3"
-                        node="div"
-                    >
-                        Details
-                    </CollapsibleItem>
-                    <CollapsibleItem
-                        expanded={false}
-                        header="Order 4"
-                        node="div"
-                    >
-                        Details
-                    </CollapsibleItem>
-  
-                </Collapsible>
-            </Aux>
-        )
+const order = (props) => {
+    /*let products = props.products? Object.keys(props.products).map( productsKey => 
+        <li key={productsKey}>{productsKey.charAt(0).toUpperCase() + productsKey.slice(1)}: {props.products[productsKey]}</li>
+    ):null*/
+    let productsArray = [];
+    for (let productName in props.products){
+        productsArray.push({
+            name: productName,
+            amounth: props.products[productName]
+        })
     }
+    const products = productsArray.map(product => 
+        <li key={product.name}><span style={{textTransform: 'capitalize'}}>{product.name}</span>: {product.amounth}</li>)
+    return (
+        <CollapsibleItem
+            expanded={false}
+            header={props.name}
+            node="div"
+            onSelect={()=>{}}
+        >
+            <ul>
+                {products}
+                <li><b>Total price: {util.formatCurrency(4.3)}</b></li>
+                <li></li>
+            </ul>
+        </CollapsibleItem>
+    )
 }
-
-export default Order;
+export default order

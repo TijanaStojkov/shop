@@ -11,7 +11,6 @@ import Modal from '../UI/Modal/Modal';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import OrderSummary from './OrderSummary/OrderSummary';
 import Filter from '../UI/Filter/Filter';
-import OrderComponent from './Checkout/Checkout';
 
 const PRODUCTS_IMAGES = {
     shert: shert,

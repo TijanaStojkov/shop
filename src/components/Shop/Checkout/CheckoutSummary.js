@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
 import Products from '../Products/Products';
 import ButtonUI from '../../UI/Button/Button';

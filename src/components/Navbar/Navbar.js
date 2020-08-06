@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Icon, NavItem } from 'react-materialize';
+import { Navbar, Icon } from 'react-materialize';
 import { NavLink } from 'react-router-dom';
 import './Navbar.scss'
 
@@ -22,8 +22,8 @@ const nav = () => {
                 preventScrolling: true
             }}
             >
-                <NavLink to='/' exact><NavItem >Shop</NavItem></NavLink>
-                <NavLink to='/Orders'><NavItem >Orders</NavItem></NavLink>
+                <NavLink to='/' exact>Shop</NavLink>
+                <NavLink to='/Orders'>Orders</NavLink>
         </Navbar>
     )
 }
