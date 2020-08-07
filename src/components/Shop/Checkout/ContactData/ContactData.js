@@ -3,35 +3,75 @@ import axios from 'axios';
 import ButtonUI from '../../../UI/Button/Button';
 import Spinner from '../../../UI/Spinner/Spinner';
 import { Row, Col } from 'react-materialize';
-import './ContactData.css'
+import './ContactData.css';
+import InputComponent from '../../../UI/Forms/Input/Input'
 
 
 class CheckoutData extends Component{
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCOde: ''
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder:'Your name',
+                },
+                value: '',
+            },
+                
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder:'Your street',
+                },
+                value: '',
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder:'Your zipCode',
+                },
+                value: '',
+            },
+                country: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder:'Your country',
+                    },
+                    value: '',
+                },  
+                email: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder:'Your email',
+                    },
+                    value: '',
+                },  
+                deliveryMethod: {
+                    elementType: 'select',
+                    elementConfig: {
+                        options: [
+                            {value:'fastest', deliveryValue: 'Fastest'},
+                            {value:'cheapest', deliveryValue: 'Cheapest'}
+                        ]
+                    },
+                    value: '',
+                },  
         },
         loading: false
     }
     orderHandler = (e) => {
         e.preventDefault()
-        console.log(this.props.products)
         this.setState({ loading: true })
         const products = {
-        products: this.props.products,
-        price: this.props.totalPrice,
-            customer: {
-                name: 'Tijana Stojkov',
-                address: {
-                    street: "Njegoseva",
-                    zipCode: "23000",
-                    country: "Greece",
-                },
-            },
-            deliveryMethod: 'fast'
+            products: this.props.products,
+            price: this.props.totalPrice,
+                
+                deliveryMethod: 'fast'
         }
         axios.post('https://e-commerce-5e72e.firebaseio.com/order.json', products)
         .then(responce => {
@@ -47,32 +87,50 @@ class CheckoutData extends Component{
         })
     }
     render() {
+        const formElementArray = [];
+        for (let key in this.state.orderForm){
+            formElementArray.push({
+                id:key,
+                config: this.state.orderForm[key]
+            })
+        }
         let form = (
             <form className='text-placeholder'>
-                <input type='text' name='name' placeholder='Your name'/>
-                <input type='email' name='email' placeholder='Your email'/>
-                <input type='text' name='street' placeholder='Your street'/>
-                <input type='text' name='postal' placeholder='Your postal'/>
-                <ButtonUI  
-                    ClassName = 'green lighten-2'
-                    text = 'Order'
-                    textOrIcon = ''
-                    clicked = {this.orderHandler}
-                />
+               
+               {formElementArray.map(formElement => (
+                    <InputComponent 
+                        key={formElement.id}
+                        elementType={formElement.config.elementType} 
+                        elementConfig={formElement.config.elementConfig} 
+                        value={formElement.config.value} />
+               ))}
+                
             </form>
             );
         if (this.state.loading) {
                form = <Spinner/>
         }
         return(
-            <Row>
-                <Col s={3}/>
-                <Col s={6}>
-                <h4 className='center '>Enter your contact data</h4>
-                 {form}
-                </Col>
-                <Col s={3}/>
-            </Row>
+            <div>
+                <Row>
+                    <Col s={3}/>
+                    <Col s={6}>
+                    <h4 className='center '>Enter your contact data</h4>
+                    {form}
+                    </Col>
+                    <Col s={3}/>
+                </Row>
+                <Row>
+                    <Col s={5}/>
+                    <Col s={4}>
+                    <ButtonUI  
+                        ClassName = 'green lighten-2'
+                        text = 'Order'
+                        textOrIcon = ''
+                        clicked = {this.orderHandler}
+                    /></Col>
+                </Row>
+            </div>
         )
     }
 }
