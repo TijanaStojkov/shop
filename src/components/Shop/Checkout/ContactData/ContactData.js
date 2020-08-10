@@ -4,7 +4,8 @@ import ButtonUI from '../../../UI/Button/Button';
 import Spinner from '../../../UI/Spinner/Spinner';
 import { Row, Col } from 'react-materialize';
 import './ContactData.css';
-import InputComponent from '../../../UI/Forms/Input/Input'
+import InputComponent from '../../../UI/Forms/Input/Input';
+import $ from 'jquery'
 
 
 class CheckoutData extends Component{
@@ -65,11 +66,17 @@ class CheckoutData extends Component{
         loading: false
     }
     orderHandler = (e) => {
+        console.log('sfds')
         e.preventDefault()
         this.setState({ loading: true })
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm){
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
+        }
         const products = {
             products: this.props.products,
             price: this.props.totalPrice,
+            orderData: formData,
                 
                 deliveryMethod: 'fast'
         }
@@ -95,6 +102,11 @@ class CheckoutData extends Component{
             orderForm: updatedOrderForm
         })
     }
+    componentDidMount(){
+        $(document).ready(function() {
+            window.$('select').formSelect();
+          });
+    }
     render() {
         const formElementArray = [];
         for (let key in this.state.orderForm){
@@ -104,17 +116,22 @@ class CheckoutData extends Component{
             })
         }
         let form = (
-            <form className='text-placeholder'>
+            <form onSubmit={this.orderHandler} className='text-placeholder'>
                
                {formElementArray.map(formElement => (
                     <InputComponent 
+                    style={{display: 'block'}}
                         key={formElement.id}
                         elementType={formElement.config.elementType} 
                         elementConfig={formElement.config.elementConfig} 
                         value={formElement.config.value}
                         change={(event) => this.inputChangedHandler(event, formElement.id)} />
                ))}
-                
+                <ButtonUI  
+                        ClassName = 'green lighten-2'
+                        text = 'Order'
+                        textOrIcon = ''
+                    />
             </form>
             );
         if (this.state.loading) {
@@ -129,16 +146,6 @@ class CheckoutData extends Component{
                     {form}
                     </Col>
                     <Col s={3}/>
-                </Row>
-                <Row>
-                    <Col s={5}/>
-                    <Col s={4}>
-                    <ButtonUI  
-                        ClassName = 'green lighten-2'
-                        text = 'Order'
-                        textOrIcon = ''
-                        clicked = {this.orderHandler}
-                    /></Col>
                 </Row>
             </div>
         )
