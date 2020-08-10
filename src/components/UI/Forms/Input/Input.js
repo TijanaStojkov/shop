@@ -1,26 +1,25 @@
 import React from 'react';
-import { Select } from 'react-materialize';
 import './Input.scss'
 const input = (props) =>{
     let inputElement = null;
 
     switch ( props.elementType ) {
         case ('input'):
-            inputElement = <input {...props.elementConfig} value={props.value}/>
+            inputElement = <input {...props.elementConfig} value={props.value} onChange={props.change}/>
             break;
         case ('textarea'):
-            inputElement = <textarea {...props.elementConfig} value={props.value}/>
+            inputElement = <textarea {...props.elementConfig} value={props.value} onChange={props.change}/>
             break;
         case ('select'):   
             inputElement = 
-            <Select {...props.elementConfig} value={props.value}>
+            <select  value={props.value} onChange={props.change}>
                 {props.elementConfig.options.map(option => (
-                    <option key={option.value} value={option.value}>{option.deliveryValue}</option>
+                    <option key={option.value} value={option.value} >{option.deliveryValue}</option>
                 ))}
-            </Select>
+            </select>
             break;
         default:
-            inputElement = <input {...props.elementConfig} value={props.value}/>
+            inputElement = <input {...props.elementConfig} value={props.value} onChange={props.change}/>
     }
     return (
         <div>

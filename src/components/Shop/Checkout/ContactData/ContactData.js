@@ -77,13 +77,22 @@ class CheckoutData extends Component{
         .then(responce => {
             this.setState({ loading: false })
             this.props.history.push('/')
-            console.log(responce)
+            //console.log(responce)
         })
         .catch(error => {
             this.setState({
                 loading: false,
                 errorMessage: "Network error post",
             })
+        })
+    }
+    inputChangedHandler = (event, inputIdentefier) => {
+        const updatedOrderForm = {...this.state.orderForm}
+        const updatedFormElement = {...updatedOrderForm[inputIdentefier]}
+        updatedFormElement.value = event.target.value
+        updatedOrderForm[inputIdentefier] = updatedFormElement
+        this.setState({
+            orderForm: updatedOrderForm
         })
     }
     render() {
@@ -102,7 +111,8 @@ class CheckoutData extends Component{
                         key={formElement.id}
                         elementType={formElement.config.elementType} 
                         elementConfig={formElement.config.elementConfig} 
-                        value={formElement.config.value} />
+                        value={formElement.config.value}
+                        change={(event) => this.inputChangedHandler(event, formElement.id)} />
                ))}
                 
             </form>

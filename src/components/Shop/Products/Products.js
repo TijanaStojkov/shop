@@ -18,17 +18,16 @@ const products = (props) => {
                     productSizes={props.productSizes[productKey]}
                     />
                 :null:
-            <Product 
-                key={productKey} 
-                productName={productKey} 
-                productQuantity={props.products[productKey]} 
-                productImages={props.productImages[productKey]}
-                productPrices={props.productPrices[productKey]}
-                productSizes={props.productSizes[productKey]}
-                removeProduct={props.removeProduct}
-                addProduct={props.addProduct}/>
-            )
-           
+                <Product 
+                    key={productKey} 
+                    productName={productKey} 
+                    productQuantity={props.products[productKey]} 
+                    productImages={props.productImages[productKey]}
+                    productPrices={props.productPrices[productKey]}
+                    productSizes={props.productSizes[productKey]}
+                    removeProduct={props.removeProduct}
+                    addProduct={props.addProduct}/>
+                )
             }
         }
     )
