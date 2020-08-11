@@ -18,6 +18,11 @@ class CheckoutData extends Component{
                     placeholder:'Your name',
                 },
                 value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                tuched: false
             },
                 
             street: {
@@ -27,6 +32,11 @@ class CheckoutData extends Component{
                     placeholder:'Your street',
                 },
                 value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                tuched: false
             },
             zipCode: {
                 elementType: 'input',
@@ -35,6 +45,13 @@ class CheckoutData extends Component{
                     placeholder:'Your zipCode',
                 },
                 value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                },
+                valid: false,
+                tuched: false
             },
                 country: {
                     elementType: 'input',
@@ -43,6 +60,11 @@ class CheckoutData extends Component{
                         placeholder:'Your country',
                     },
                     value: '',
+                    validation: {
+                        required: true
+                    },
+                    valid: false,
+                    tuched: false
                 },  
                 email: {
                     elementType: 'input',
@@ -51,6 +73,11 @@ class CheckoutData extends Component{
                         placeholder:'Your email',
                     },
                     value: '',
+                    validation: {
+                        required: true
+                    },
+                    valid: false,
+                    tuched: false
                 },  
                 deliveryMethod: {
                     elementType: 'select',
@@ -60,10 +87,27 @@ class CheckoutData extends Component{
                             {value:'cheapest', deliveryValue: 'Cheapest'}
                         ]
                     },
-                    value: '',
+                    validation: {},
+                    value: 'fastest',
+                    valid: true
                 },  
         },
+        formIsValid: false,
         loading: false
+    }
+    checkValidity (value,rules){
+        console.log(value, rules)
+        let isValid = true
+        if (rules.required){
+            isValid = value.trim() !== '' && isValid;
+        }
+        if (rules.minLength){
+            isValid = value.length >= rules.minLength && isValid;
+        }
+        if (rules.maxLength){
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+        return isValid
     }
     orderHandler = (e) => {
         console.log('sfds')
@@ -84,7 +128,6 @@ class CheckoutData extends Component{
         .then(responce => {
             this.setState({ loading: false })
             this.props.history.push('/')
-            //console.log(responce)
         })
         .catch(error => {
             this.setState({
@@ -94,12 +137,23 @@ class CheckoutData extends Component{
         })
     }
     inputChangedHandler = (event, inputIdentefier) => {
-        const updatedOrderForm = {...this.state.orderForm}
-        const updatedFormElement = {...updatedOrderForm[inputIdentefier]}
-        updatedFormElement.value = event.target.value
-        updatedOrderForm[inputIdentefier] = updatedFormElement
+        const updatedOrderForm = {...this.state.orderForm};
+        const updatedFormElement = {...updatedOrderForm[inputIdentefier]};
+        updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity (updatedFormElement.value,updatedFormElement.validation)
+        
+        updatedFormElement.tuched = true;
+        updatedOrderForm[inputIdentefier] = updatedFormElement;
+        console.log(updatedOrderForm)
+        let formIsValid = true;
+        for (let inputIndentifiers in updatedOrderForm){
+            formIsValid = updatedOrderForm[inputIndentifiers].valid && formIsValid;
+            console.log(formIsValid)
+        }
+        console.log(formIsValid)
         this.setState({
-            orderForm: updatedOrderForm
+            orderForm: updatedOrderForm,
+            formIsValid: formIsValid
         })
     }
     componentDidMount(){
@@ -120,17 +174,20 @@ class CheckoutData extends Component{
                
                {formElementArray.map(formElement => (
                     <InputComponent 
-                    style={{display: 'block'}}
                         key={formElement.id}
                         elementType={formElement.config.elementType} 
                         elementConfig={formElement.config.elementConfig} 
                         value={formElement.config.value}
-                        change={(event) => this.inputChangedHandler(event, formElement.id)} />
+                        change={(event) => this.inputChangedHandler(event, formElement.id)}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
+                        tuched={formElement.config.tuched} />
                ))}
                 <ButtonUI  
                         ClassName = 'green lighten-2'
                         text = 'Order'
                         textOrIcon = ''
+                        disabled={!this.state.formIsValid}
                     />
             </form>
             );

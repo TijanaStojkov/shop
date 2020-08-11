@@ -10,6 +10,7 @@ const button = (props) => (
         waves="light" 
         className={props.ClassName}
         onClick={props.clicked} 
+        disabled={props.disabled}
         > <Icon>{props.textOrIcon}</Icon>{props.text} </Button>
 )
 
