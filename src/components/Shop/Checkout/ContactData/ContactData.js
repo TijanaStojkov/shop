@@ -96,7 +96,6 @@ class CheckoutData extends Component{
         loading: false
     }
     checkValidity (value,rules){
-        console.log(value, rules)
         let isValid = true
         if (rules.required){
             isValid = value.trim() !== '' && isValid;
@@ -110,7 +109,6 @@ class CheckoutData extends Component{
         return isValid
     }
     orderHandler = (e) => {
-        console.log('sfds')
         e.preventDefault()
         this.setState({ loading: true })
         const formData = {};
@@ -121,8 +119,6 @@ class CheckoutData extends Component{
             products: this.props.products,
             price: this.props.totalPrice,
             orderData: formData,
-                
-                deliveryMethod: 'fast'
         }
         axios.post('https://e-commerce-5e72e.firebaseio.com/order.json', products)
         .then(responce => {

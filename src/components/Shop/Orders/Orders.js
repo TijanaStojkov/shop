@@ -44,8 +44,8 @@ class Orders extends Component {
             return (
                 <Order 
                     key={order.id}
-                    name={order.customer.name} 
-                    deliveryMethod={order.deliveryMethod}
+                    name={order.orderData.name} 
+                    deliveryMethod={order.orderData.deliveryMethod}
                     products={order.products}
                     
                     />
