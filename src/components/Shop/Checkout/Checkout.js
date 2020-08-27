@@ -11,6 +11,9 @@ import shert from '../../../assets/images/products/shert.jpg';
 import pants from '../../../assets/images/products/pants.jpg';
 import skirt from '../../../assets/images/products/skirt.jpg';
 
+//redux
+import { connect } from 'react-redux';
+
 const PRODUCTS_IMAGES = {
     shert: shert,
     pants: pants,
@@ -30,33 +33,9 @@ const PRODUCTS_SIZES = {
 class Checkout extends Component{
     
     state = {
-        products: {
-            pants:0,
-            shert:1,
-            skirt:4
-        },
-        totalPrice: 0,
         orderable: false,
         errorMessage: "",
-        size: '',
         order:true
-    }
-    componentDidMount(){
-        const query = new URLSearchParams(this.props.location.search);
-        console.log(query)
-        const products = {};
-        var totalPrice = 0;
-        for (let param of query.entries()){//['pants','1']
-            if(param[0]==='price'){
-                totalPrice = param[1]
-            }else{
-                products[param[0]] = +param[1]
-            } 
-        }
-        this.setState({
-            products: products,
-            totalPrice: totalPrice
-        })
     }
     onCheckoutCancle = () => {
         this.props.history.goBack();
@@ -69,7 +48,7 @@ class Checkout extends Component{
             <Aux>
                 <CheckoutSummary
                     order={this.state.order}
-                    filterProductsList={this.state.products}
+                    filterProductsList={this.props.products}
                     productImages={PRODUCTS_IMAGES}
                     productPrices={PRODUCTS_PRICES}
                     productSizes={PRODUCTS_SIZES}
@@ -78,11 +57,15 @@ class Checkout extends Component{
                     />
                     <Route 
                         path={this.props.match.path + '/contact-data'} 
-                        render={(props) => (<CheckoutData products={this.state.products} totalPrice={this.state.totalPrice} {...props}/>)}
-                        />
+                        component={CheckoutData} />
             </Aux>
         )
-    }
-        
+    }   
 }
-export default Checkout;
+
+const mapStateToProps = state => {
+    return {
+        products: state.products,
+    }
+}
+export default connect(mapStateToProps)(Checkout);

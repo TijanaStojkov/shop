@@ -8,7 +8,6 @@ class ModalComponent extends Component {
         return (this.props.orderable !== nextProps.orderable || this.props.children !== nextProps.children)
     }
     componentDidUpdate (){
-        console.log('updated')
     }
     
     render () {

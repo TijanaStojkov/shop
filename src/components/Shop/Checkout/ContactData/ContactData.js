@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './ContactData.css';
+import $ from 'jquery';
+
+//components
 import ButtonUI from '../../../UI/Button/Button';
 import Spinner from '../../../UI/Spinner/Spinner';
-import { Row, Col } from 'react-materialize';
-import './ContactData.css';
 import InputComponent from '../../../UI/Forms/Input/Input';
-import $ from 'jquery'
 
+//react-materialize
+import { Row, Col } from 'react-materialize';
+
+//redux
+import { connect } from 'react-redux';
 
 class CheckoutData extends Component{
     state = {
@@ -204,4 +210,11 @@ class CheckoutData extends Component{
         )
     }
 }
-export default CheckoutData;
+
+const mapStateToProps = state => {
+    return {
+        products: state.products,
+        totalPrice: state.totalPrice,
+    }
+}
+export default connect(mapStateToProps)(CheckoutData);

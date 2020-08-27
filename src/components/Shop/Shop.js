@@ -12,6 +12,10 @@ import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import OrderSummary from './OrderSummary/OrderSummary';
 import Filter from '../UI/Filter/Filter';
 
+//redux
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions'
+
 const PRODUCTS_IMAGES = {
     shert: shert,
     pants: pants,
@@ -29,60 +33,12 @@ const PRODUCTS_SIZES = {
 }
 
 class Shop extends Component {
+    
     state = {
-        products: null,
-        filterProductsList: null,
-        totalPrice: 0,
         orderable: false,
         errorMessage: "",
         size: '',
         order:true
-    }
-    removeProduct = (productName) => {
-        //count
-        const oldProductCount = this.state.products[productName];
-        if (oldProductCount===0){
-            return;
-        }
-        const newProductCount =  oldProductCount - 1;
-        const products = {
-            ...this.state.products
-        }
-        products[productName] = newProductCount;
-        //totalPrice
-        const oldTotalPrice = this.state.totalPrice;
-        const newTotalPrice = oldTotalPrice - PRODUCTS_PRICES[productName]
- 
-        this.setState({
-            products: products,
-            filterProductsList: products,
-            totalPrice: newTotalPrice
-        }, function(){
-            this.listProducts()
-        })
-        this.updatePurchasable(products);
-    }
-    addProduct = (productName) => {
-        //count
-        const oldProductCount = this.state.products[productName];
-        const newProductCount =  oldProductCount + 1
-        const products = {
-            ...this.state.products
-        }
-        products[productName] = newProductCount
-        //totalPrice
-        const oldTotalPrice = this.state.totalPrice;
-        const newTotalPrice = oldTotalPrice + PRODUCTS_PRICES[productName]
-
-        this.setState({
-            products: products,
-            filterProductsList: products,
-            totalPrice: newTotalPrice
-        }, function(){
-            this.listProducts()
-        })
-        this.updatePurchasable(products);
-        
     }
     updatePurchasable = (products) => {
         const sum = Object.keys(products)
@@ -92,12 +48,10 @@ class Shop extends Component {
         .reduce((first, next) => {
             return first + next
         },0)
-        this.setState({
-            orderable: sum>0
-        })
+        return  sum>0;
     }
     componentDidMount () {
-        axios.get('https://e-commerce-5e72e.firebaseio.com/products.json')
+        /*axios.get('https://e-commerce-5e72e.firebaseio.com/products.json')
         .then(resp =>{
             this.setState({
                 products: resp.data,
@@ -108,22 +62,19 @@ class Shop extends Component {
             this.setState({
                 errorMessage: "Network error get"
             })
-        })
+        })*/
     }
     orderHandler = () => {
-        const queryParams = [];
-        for (let i in this.state.products){
-            queryParams.push(i + '=' + this.state.products[i])
-        }
-        queryParams.push('price=' + this.state.totalPrice)
-        const queryString = queryParams.join('&')
-        //this.props.history.push('/checkout')
-        this.props.history.push({
-            pathname:'/checkout',
-            search: '?' + queryString
-        })
+        this.props.history.push('/checkout')
        }
-    
+    addProduct = (productName) => {
+        this.props.addProduct(productName);
+        window.setTimeout (() => { this.listProducts(); }, 0);
+    }
+    removeProduct = (productName) => {
+        this.props.removeProduct(productName);
+        window.setTimeout (() => { this.listProducts(); }, 0);
+    }
     filterSize = (e) => {
         this.setState({
             size: e.target.value
@@ -134,21 +85,17 @@ class Shop extends Component {
     listProducts = () => {
         if(this.state.size!==''){
             const selected = this.state.size;
-            var filterProductsList = {...this.state.products};
+            var filterProductsList = {...this.props.products};
             Object.keys(PRODUCTS_SIZES).forEach(element => {
                 if(PRODUCTS_SIZES[element].indexOf(selected.toUpperCase())<0){
                 delete filterProductsList[element]
                 }
             });
-            this.setState({
-                filterProductsList: filterProductsList
-            })
+            this.props.filterProducts(filterProductsList)
         }
     }
     render () {
-        const productsComponent = this.state.products?  <Products 
-        products={this.state.filterProductsList} 
-        filterProductsList={this.state.filterProductsList}
+        const productsComponent = this.props.products?  <Products 
         productImages={PRODUCTS_IMAGES}
         productPrices={PRODUCTS_PRICES}
         productSizes={PRODUCTS_SIZES}
@@ -157,15 +104,15 @@ class Shop extends Component {
         
         let ordeSummary = null;
         let filterProducts = null;
-        if (this.state.products){
+        if (this.props.products){
             ordeSummary = 
             <OrderSummary 
-                products={this.state.products}
-                totalPrice={this.state.totalPrice}
+                products={this.props.products}
+                totalPrice={this.props.totalPrice}
             />
             filterProducts =
             <Filter
-                size={this.state.size}
+                size={this.props.size}
                 filterSize={this.filterSize}
             />
         }
@@ -176,9 +123,9 @@ class Shop extends Component {
                 {productsComponent}
                 <p>{this.state.errorMessage}</p>
                 <Modal 
-                    products={this.state.products}
+                    products={this.props.products}
                     totalPrice={this.state.totalPrice}
-                    orderable={this.state.orderable}
+                    orderable={this.updatePurchasable(this.props.products)}
                     orderHandler={this.orderHandler}
                 >
                     {ordeSummary}
@@ -187,5 +134,21 @@ class Shop extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        products: state.products,
+        filterProductsList: state.filterProductsList,
+        size: state.size,
+        totalPrice: state.totalPrice
+    }
+};
+const mapDispachToProps = dispach => {
+    return {
+        addProduct: (productName) => dispach({type: actionTypes.ADD_PRODUCT, productName: productName}),
+        removeProduct: (productName) => dispach({type: actionTypes.REMOVE_PRODUCT, productName: productName}),
+        filterProducts: (filterProductsList) => dispach({type: actionTypes.FILTER, filterProductsList: filterProductsList}),
+        filterSize: (size) => dispach({type: actionTypes.FILTER_SIZE, value: size})
+    }
+}
 
-export default withErrorHandler(Shop,axios);
+export default connect(mapStateToProps,mapDispachToProps)(withErrorHandler(Shop,axios));
