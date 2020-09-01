@@ -11,10 +11,10 @@ import Modal from '../UI/Modal/Modal';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import OrderSummary from './OrderSummary/OrderSummary';
 import Filter from '../UI/Filter/Filter';
-
 //redux
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions'
+//actions
+import * as actionCreators from '../../store/actions/allActions'
 
 const PRODUCTS_IMAGES = {
     shert: shert,
@@ -69,20 +69,20 @@ class Shop extends Component {
        }
     addProduct = (productName) => {
         this.props.addProduct(productName);
-        window.setTimeout (() => { this.listProducts(); }, 0);
+        //window.setTimeout (() => { this.listProducts(); }, 0);
     }
     removeProduct = (productName) => {
         this.props.removeProduct(productName);
-        window.setTimeout (() => { this.listProducts(); }, 0);
+        //window.setTimeout (() => { this.listProducts(); }, 0);
     }
-    filterSize = (e) => {
+    /*filterSize = (e) => {
         this.setState({
             size: e.target.value
         }, function () {
             this.listProducts()
         })
-    }
-    listProducts = () => {
+    }*/
+    /*listProducts = () => {
         if(this.state.size!==''){
             const selected = this.state.size;
             var filterProductsList = {...this.props.products};
@@ -93,7 +93,7 @@ class Shop extends Component {
             });
             this.props.filterProducts(filterProductsList)
         }
-    }
+    }*/
     render () {
         const productsComponent = this.props.products?  <Products 
         productImages={PRODUCTS_IMAGES}
@@ -113,7 +113,7 @@ class Shop extends Component {
             filterProducts =
             <Filter
                 size={this.props.size}
-                filterSize={this.filterSize}
+                filterSize={this.props.filterSize}
             />
         }
         return (
@@ -144,10 +144,9 @@ const mapStateToProps = state => {
 };
 const mapDispachToProps = dispach => {
     return {
-        addProduct: (productName) => dispach({type: actionTypes.ADD_PRODUCT, productName: productName}),
-        removeProduct: (productName) => dispach({type: actionTypes.REMOVE_PRODUCT, productName: productName}),
-        filterProducts: (filterProductsList) => dispach({type: actionTypes.FILTER, filterProductsList: filterProductsList}),
-        filterSize: (size) => dispach({type: actionTypes.FILTER_SIZE, value: size})
+        addProduct: (productName) => dispach(actionCreators.addProduct(productName)),
+        removeProduct: (productName) => dispach(actionCreators.removeProduct(productName)),
+        filterSize: (size) => dispach(actionCreators.filterSize(size))
     }
 }
 

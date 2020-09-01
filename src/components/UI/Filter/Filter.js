@@ -11,7 +11,7 @@ const filter = (props) => (
                 label='Filter by size'
                 id="Select-9"
                 multiple={false}
-                onChange={props.filterSize}
+                onChange={(event) => props.filterSize(event.target.value)}
                 options={{
                     classes: '',
                     dropdownOptions: {

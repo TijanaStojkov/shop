@@ -48,7 +48,7 @@ class Checkout extends Component{
             <Aux>
                 <CheckoutSummary
                     order={this.state.order}
-                    filterProductsList={this.props.products}
+                    products={this.props.products}
                     productImages={PRODUCTS_IMAGES}
                     productPrices={PRODUCTS_PRICES}
                     productSizes={PRODUCTS_SIZES}

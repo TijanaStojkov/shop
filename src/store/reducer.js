@@ -1,4 +1,5 @@
-import * as actionTypes from './actions';
+import * as actionTypes from './actions/actionTypes';
+import { updateObject } from './utility'
 
 const initalState = {
     totalPrice: 0,
@@ -14,56 +15,63 @@ const initalState = {
     },
     size: '',
 }
+const PRODUCTS_SIZES = {
+    shert: ["X", "L", "XL", "XXL"],
+    pants: ["X", "M", "XL"],
+    skirt: ["S", "X", "XXL"],
+}
 const PRODUCTS_PRICES = {
     shert: 10,
     pants: 4.3,
     skirt: 5.4,
 }
+const listProducts = (state, newProductsObject, size) => {
+    if(state.size!=='' || size!==''){
+        const selected = size!==''?size: state.size;
+        var filterProductsList = {...newProductsObject};
+        Object.keys(PRODUCTS_SIZES).forEach(element => {
+            if(PRODUCTS_SIZES[element].indexOf(selected.toUpperCase())<0){
+                delete filterProductsList[element]
+            }
+        });
+        return filterProductsList
+    }
+}
 const reducer = (state = initalState, action) => {
     switch (action.type){
         case actionTypes.ADD_PRODUCT:
-
             const newProductsAdd = {...state.products};
             const newProductCountAdd = newProductsAdd[action.productName] + 1;
             newProductsAdd[action.productName] = newProductCountAdd;
+            
+            const filterProductsListAdd = listProducts(state, newProductsAdd, '')
+            const filteredProductsListAdd = filterProductsListAdd?filterProductsListAdd:newProductsAdd
             console.log('state-add', state)
-
-            return{
-                ...state,
+            return updateObject(state,{
                 products: newProductsAdd,
-                filterProductsList: newProductsAdd,
-                totalPrice: state.totalPrice + PRODUCTS_PRICES[action.productName]
-            };
-        case actionTypes.REMOVE_PRODUCT:
+                filterProductsList: filteredProductsListAdd,
+                totalPrice: state.totalPrice + PRODUCTS_PRICES[action.productName],
+            })
 
+        case actionTypes.REMOVE_PRODUCT:
             const newProductsRemove = {...state.products};
             const newProductCountRemove = newProductsRemove[action.productName] - 1;
             newProductsRemove[action.productName] = newProductCountRemove;
+
+            const filterProductsListRemove = listProducts(state, newProductsRemove, '')
+            const filteredProductsListRemove = filterProductsListRemove?filterProductsListRemove:newProductsRemove
             console.log('state-remove', state)
-
-            return{
-                ...state,
+            return updateObject(state,{
                 products: newProductsRemove,
-                filterProductsList: newProductsRemove,
+                filterProductsList: filteredProductsListRemove ,
                 totalPrice: state.totalPrice - PRODUCTS_PRICES[action.productName]
-            };
-        case actionTypes.FILTER:
-            const newFilterProductsList = action.filterProductsList;
-            console.log('state-filter', state)
-
-            return{
-                ...state,
-                filterProductsList: newFilterProductsList
-            }
+            })
+            
         case actionTypes.FILTER_SIZE:
-
-            return{
-                ...state,
-                size: action.size
-            }
+            const filterProductsListSize = listProducts(state, state.products, action.size)
+            return updateObject(state, {size: action.size, filterProductsList: filterProductsListSize})
             
         default:
-
             return state;
     }
 }

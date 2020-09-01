@@ -8,8 +8,7 @@ const CheckoutSummary = (props) => {
             <Aux>
                 <Products 
                     order={props.order}
-                    products={props.filterProductsList} 
-                    filterProductsList={props.filterProductsList}
+                    filterProductsList={props.products}
                     productImages={props.productImages}
                     productPrices={props.productPrices}
                     productSizes={props.productSizes}/>
