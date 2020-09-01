@@ -1,3 +1,5 @@
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const FILTER_SIZE = 'FILTER_SIZE';
+export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const FETCH_PRODUCTS_FAILD = 'FETCH_PRODUCTS_FAILD';

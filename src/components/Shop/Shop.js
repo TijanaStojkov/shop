@@ -36,64 +36,32 @@ class Shop extends Component {
     
     state = {
         orderable: false,
-        errorMessage: "",
-        size: '',
         order:true
     }
     updatePurchasable = (products) => {
-        const sum = Object.keys(products)
-        .map(productKey =>{
-            return products[productKey]
-        })
-        .reduce((first, next) => {
-            return first + next
-        },0)
-        return  sum>0;
+        if(products){
+            const sum = Object.keys(products)
+            .map(productKey =>{
+                return products[productKey]
+            })
+            .reduce((first, next) => {
+                return first + next
+            },0)
+            return  sum>0;
+        }  
     }
     componentDidMount () {
-        /*axios.get('https://e-commerce-5e72e.firebaseio.com/products.json')
-        .then(resp =>{
-            this.setState({
-                products: resp.data,
-                filterProductsList: resp.data
-            })
-        })
-        .catch(error => {
-            this.setState({
-                errorMessage: "Network error get"
-            })
-        })*/
+        this.props.initProducts()
     }
     orderHandler = () => {
         this.props.history.push('/checkout')
        }
     addProduct = (productName) => {
         this.props.addProduct(productName);
-        //window.setTimeout (() => { this.listProducts(); }, 0);
     }
     removeProduct = (productName) => {
         this.props.removeProduct(productName);
-        //window.setTimeout (() => { this.listProducts(); }, 0);
     }
-    /*filterSize = (e) => {
-        this.setState({
-            size: e.target.value
-        }, function () {
-            this.listProducts()
-        })
-    }*/
-    /*listProducts = () => {
-        if(this.state.size!==''){
-            const selected = this.state.size;
-            var filterProductsList = {...this.props.products};
-            Object.keys(PRODUCTS_SIZES).forEach(element => {
-                if(PRODUCTS_SIZES[element].indexOf(selected.toUpperCase())<0){
-                delete filterProductsList[element]
-                }
-            });
-            this.props.filterProducts(filterProductsList)
-        }
-    }*/
     render () {
         const productsComponent = this.props.products?  <Products 
         productImages={PRODUCTS_IMAGES}
@@ -121,10 +89,10 @@ class Shop extends Component {
                 <h1>Our shop</h1>
                 {filterProducts}
                 {productsComponent}
-                <p>{this.state.errorMessage}</p>
+                <p>{this.props.errorMessage}</p>
                 <Modal 
                     products={this.props.products}
-                    totalPrice={this.state.totalPrice}
+                    totalPrice={this.props.totalPrice}
                     orderable={this.updatePurchasable(this.props.products)}
                     orderHandler={this.orderHandler}
                 >
@@ -139,14 +107,16 @@ const mapStateToProps = state => {
         products: state.products,
         filterProductsList: state.filterProductsList,
         size: state.size,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        errorMessage: state.errorMessage,
     }
 };
 const mapDispachToProps = dispach => {
     return {
         addProduct: (productName) => dispach(actionCreators.addProduct(productName)),
         removeProduct: (productName) => dispach(actionCreators.removeProduct(productName)),
-        filterSize: (size) => dispach(actionCreators.filterSize(size))
+        filterSize: (size) => dispach(actionCreators.filterSize(size)),
+        initProducts: () => dispach(actionCreators.initProducts()),
     }
 }
 

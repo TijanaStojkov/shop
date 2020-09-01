@@ -3,17 +3,14 @@ import { updateObject } from './utility'
 
 const initalState = {
     totalPrice: 0,
-    products: {
-        pants:0,
-        shert:0,
-        skirt:0
-    },
+    products: null,
     filterProductsList: {
         pants:0,
         shert:0,
         skirt:0
     },
     size: '',
+    errorMessage: '',
 }
 const PRODUCTS_SIZES = {
     shert: ["X", "L", "XL", "XXL"],
@@ -70,7 +67,12 @@ const reducer = (state = initalState, action) => {
         case actionTypes.FILTER_SIZE:
             const filterProductsListSize = listProducts(state, state.products, action.size)
             return updateObject(state, {size: action.size, filterProductsList: filterProductsListSize})
-            
+
+        case actionTypes.SET_PRODUCTS:
+            return updateObject(state, {products: action.products, errorMessage: ''})
+
+        case actionTypes.FETCH_PRODUCTS_FAILD:
+            return updateObject(state, {errorMessage: 'Fetching products faild!'})
         default:
             return state;
     }

@@ -4,5 +4,6 @@ export {
 
 export {
     addProduct,
-    removeProduct
+    removeProduct,
+    initProducts
 } from './products'
