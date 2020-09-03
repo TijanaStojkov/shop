@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxilary/Auxilary';
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 //components
 import CheckoutSummary from './CheckoutSummary';
-import CheckoutData from '../Checkout/ContactData/ContactData'
+import ContactData from '../Checkout/ContactData/ContactData'
 
 //images
 import shert from '../../../assets/images/products/shert.jpg';
@@ -44,20 +44,29 @@ class Checkout extends Component{
         this.props.history.replace('/checkout/contact-data')
     }
     render(){
+        let summary = <Redirect to='/'/>
+
+        if(this.props.products){
+            const purchasedRedirect =  this.props.purchased? <Redirect to='/'/>:null;
+            summary =  <div>
+                            {purchasedRedirect}
+                            <CheckoutSummary
+                                order={this.state.order}
+                                products={this.props.products}
+                                productImages={PRODUCTS_IMAGES}
+                                productPrices={PRODUCTS_PRICES}
+                                productSizes={PRODUCTS_SIZES}
+                                onCheckoutCancle={this.onCheckoutCancle}
+                                onCheckoutContinue={this.onCheckoutContinue}
+                            />
+                             <Route 
+                                path={this.props.match.path + '/contact-data'} 
+                                component={ContactData} />
+                        </div>
+        }
         return(
             <Aux>
-                <CheckoutSummary
-                    order={this.state.order}
-                    products={this.props.products}
-                    productImages={PRODUCTS_IMAGES}
-                    productPrices={PRODUCTS_PRICES}
-                    productSizes={PRODUCTS_SIZES}
-                    onCheckoutCancle={this.onCheckoutCancle}
-                    onCheckoutContinue={this.onCheckoutContinue}
-                    />
-                    <Route 
-                        path={this.props.match.path + '/contact-data'} 
-                        component={CheckoutData} />
+               {summary}
             </Aux>
         )
     }   
@@ -65,7 +74,8 @@ class Checkout extends Component{
 
 const mapStateToProps = state => {
     return {
-        products: state.products,
+        products: state.shopReducer.products,
+        purchased: state.orderReducer.purchased
     }
 }
 export default connect(mapStateToProps)(Checkout);

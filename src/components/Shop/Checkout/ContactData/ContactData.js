@@ -7,12 +7,14 @@ import $ from 'jquery';
 import ButtonUI from '../../../UI/Button/Button';
 import Spinner from '../../../UI/Spinner/Spinner';
 import InputComponent from '../../../UI/Forms/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 
 //react-materialize
 import { Row, Col } from 'react-materialize';
 
 //redux
 import { connect } from 'react-redux';
+import * as actionCreators from '../../../../store/actions/allActions';
 
 class CheckoutData extends Component{
     state = {
@@ -99,7 +101,6 @@ class CheckoutData extends Component{
                 },  
         },
         formIsValid: false,
-        loading: false
     }
     checkValidity (value,rules){
         let isValid = true
@@ -116,7 +117,6 @@ class CheckoutData extends Component{
     }
     orderHandler = (e) => {
         e.preventDefault()
-        this.setState({ loading: true })
         const formData = {};
         for (let formElementIdentifier in this.state.orderForm){
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
@@ -126,17 +126,7 @@ class CheckoutData extends Component{
             price: this.props.totalPrice,
             orderData: formData,
         }
-        axios.post('https://e-commerce-5e72e.firebaseio.com/order.json', products)
-        .then(responce => {
-            this.setState({ loading: false })
-            this.props.history.push('/')
-        })
-        .catch(error => {
-            this.setState({
-                loading: false,
-                errorMessage: "Network error post",
-            })
-        })
+        this.props.purchaseProducts(products)
     }
     inputChangedHandler = (event, inputIdentefier) => {
         const updatedOrderForm = {...this.state.orderForm};
@@ -193,7 +183,7 @@ class CheckoutData extends Component{
                     />
             </form>
             );
-        if (this.state.loading) {
+        if (this.props.loading) {
                form = <Spinner/>
         }
         return(
@@ -213,8 +203,14 @@ class CheckoutData extends Component{
 
 const mapStateToProps = state => {
     return {
-        products: state.products,
-        totalPrice: state.totalPrice,
+        products: state.shopReducer.products,
+        totalPrice: state.shopReducer.totalPrice,
+        loading: state.shopReducer.loading,
     }
 }
-export default connect(mapStateToProps)(CheckoutData);
+const mapDispachToProps = dispatch =>{
+    return {
+        purchaseProducts: (orderData) => dispatch(actionCreators.purchaseProducts(orderData))
+    }
+}
+export default connect(mapStateToProps, mapDispachToProps)(withErrorHandler(CheckoutData,axios));

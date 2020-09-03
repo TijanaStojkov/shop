@@ -42,9 +42,8 @@ class Products extends Component {
 }
 const mapStateToProps = state => {
     return{
-        state: state,
-        filterProductsList: state.filterProductsList,
-        products: state.products
+        filterProductsList: state.shopReducer.filterProductsList,
+        products: state.shopReducer.products
     }
 }
 export default connect(mapStateToProps)(Products);

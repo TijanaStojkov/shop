@@ -1,9 +1,16 @@
 export {
     filterSize
-} from './filter';
+} from './filterActions';
 
 export {
     addProduct,
     removeProduct,
     initProducts
-} from './products'
+} from './productsActions';
+
+export {
+    purchaseProducts,
+    purchaseProductsStart,
+    initPurchase,
+    fetchOrders,
+} from './orderActions'

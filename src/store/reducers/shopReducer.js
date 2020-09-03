@@ -1,5 +1,5 @@
-import * as actionTypes from './actions/actionTypes';
-import { updateObject } from './utility'
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility'
 
 const initalState = {
     totalPrice: 0,
@@ -11,6 +11,7 @@ const initalState = {
     },
     size: '',
     errorMessage: '',
+    loading: false
 }
 const PRODUCTS_SIZES = {
     shert: ["X", "L", "XL", "XXL"],
@@ -34,7 +35,7 @@ const listProducts = (state, newProductsObject, size) => {
         return filterProductsList
     }
 }
-const reducer = (state = initalState, action) => {
+const shopReducer = (state = initalState, action) => {
     switch (action.type){
         case actionTypes.ADD_PRODUCT:
             const newProductsAdd = {...state.products};
@@ -69,7 +70,8 @@ const reducer = (state = initalState, action) => {
             return updateObject(state, {size: action.size, filterProductsList: filterProductsListSize})
 
         case actionTypes.SET_PRODUCTS:
-            return updateObject(state, {products: action.products, errorMessage: ''})
+            console.log(action.products)
+            return updateObject(state, {products: action.products, filterProductsList: action.products, errorMessage: '', totalPrice: 0})
 
         case actionTypes.FETCH_PRODUCTS_FAILD:
             return updateObject(state, {errorMessage: 'Fetching products faild!'})
@@ -78,4 +80,4 @@ const reducer = (state = initalState, action) => {
     }
 }
 
-export default reducer;
+export default shopReducer;

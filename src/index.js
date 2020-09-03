@@ -5,10 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 //redux
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
 import thunk from 'redux-thunk';
+import orderReducer from './store/reducers/orderReducer';
+import shopReducer from './store/reducers/shopReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -22,7 +23,11 @@ const logger = store => {
         }
     }
 }
-const store = createStore(reducer,composeEnhancers(applyMiddleware(logger, thunk)))
+const rootReducer = combineReducers ({
+    orderReducer: orderReducer,
+    shopReducer: shopReducer
+})
+const store = createStore(rootReducer,composeEnhancers(applyMiddleware(logger, thunk)))
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

@@ -8,52 +8,30 @@ import Spinner from '../../UI/Spinner/Spinner';
 import Aux from '../../hoc/Auxilary/Auxilary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-
+//redux
+import { connect } from 'react-redux';
+import * as actionCreators from '../../../store/actions/allActions';
 class Orders extends Component {
-    state={
-        orders: [],
-        loading: true
-    }
+   
     componentDidMount () {
-        axios.get('https://e-commerce-5e72e.firebaseio.com/order.json')
-            .then ( responce => {
-                const orders = []
-                for (let key in responce.data){
-                    console.log(responce.data[key],key,responce.data)
-                    orders.push ({
-                        ...responce.data[key],
-                        id: key
-                    });
-                }
-                console.log(orders)
-                this.setState ({
-                    orders: orders,
-                    loading: false
-                })
-            })
-            .catch( error => {
-                this.setState ({
-                    loading: false
-                })
-            })
+        this.props.fetchOrders()
     }
     render() {
-        let orders = this.state.orders?
+        let orders = this.props.orders?
         <Collapsible accordion popout >
-        {this.state.orders.map(order => {
+        {this.props.orders.map(order => {
             return (
                 <Order 
                     key={order.id}
                     name={order.orderData.name} 
                     deliveryMethod={order.orderData.deliveryMethod}
                     products={order.products}
-                    
                     />
             )
         })}
         </Collapsible>: null
            
-        if(this.state.loading){
+        if(this.props.loading){
             orders = <Spinner/>
         }
         return (
@@ -64,5 +42,15 @@ class Orders extends Component {
         )
     }
 }
-
-export default withErrorHandler(Orders,axios);
+const mapStateToProps = store => {
+    return {
+        orders: store.orderReducer.orders,
+        loading: store.orderReducer.loadingOrders
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchOrders: () => dispatch(actionCreators.fetchOrders())
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders,axios));

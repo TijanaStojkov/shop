@@ -54,6 +54,7 @@ class Shop extends Component {
         this.props.initProducts()
     }
     orderHandler = () => {
+        this.props.initPurchase();
         this.props.history.push('/checkout')
        }
     addProduct = (productName) => {
@@ -104,20 +105,21 @@ class Shop extends Component {
 }
 const mapStateToProps = state => {
     return {
-        products: state.products,
-        filterProductsList: state.filterProductsList,
-        size: state.size,
-        totalPrice: state.totalPrice,
-        errorMessage: state.errorMessage,
+        products: state.shopReducer.products,
+        filterProductsList: state.shopReducer.filterProductsList,
+        size: state.shopReducer.size,
+        totalPrice: state.shopReducer.totalPrice,
+        errorMessage: state.shopReducer.errorMessage,
     }
 };
-const mapDispachToProps = dispach => {
+const mapDispatchToProps = dispatch => {
     return {
-        addProduct: (productName) => dispach(actionCreators.addProduct(productName)),
-        removeProduct: (productName) => dispach(actionCreators.removeProduct(productName)),
-        filterSize: (size) => dispach(actionCreators.filterSize(size)),
-        initProducts: () => dispach(actionCreators.initProducts()),
+        addProduct: (productName) => dispatch(actionCreators.addProduct(productName)),
+        removeProduct: (productName) => dispatch(actionCreators.removeProduct(productName)),
+        filterSize: (size) => dispatch(actionCreators.filterSize(size)),
+        initProducts: () => dispatch(actionCreators.initProducts()),
+        initPurchase: () => dispatch(actionCreators.initPurchase()),
     }
 }
 
-export default connect(mapStateToProps,mapDispachToProps)(withErrorHandler(Shop,axios));
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Shop,axios));
