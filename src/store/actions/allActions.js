@@ -11,6 +11,7 @@ export {
 export {
     purchaseProducts,
     purchaseProductsStart,
-    initPurchase,
     fetchOrders,
+    initPurchase,
+    deleteOrder,
 } from './orderActions'

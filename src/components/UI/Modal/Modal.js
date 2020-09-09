@@ -14,13 +14,14 @@ class ModalComponent extends Component {
         return (
         <Modal
             actions={[
-                <span key='1'><Button flat modal="close" node="button" waves="green">Close</Button></span>,
-                <span key='2'><Button flat modal="close" node="button" waves="green" onClick={this.props.orderHandler}>Order</Button></span>
+                <span key='1'><Button flat modal="close" node="button" waves="light">Close</Button></span>,
+                <span key='2'><Button flat modal="close" node="button" waves="light" onClick={this.props.orderHandler}>Order</Button></span>
             ]}
             bottomSheet={false}
             fixedFooter={false}
             header="Order summary"
             id="modal-0"
+            className='addScroll'
             options={{
                 dismissible: true,
                 endingTop: '10%',
@@ -34,7 +35,7 @@ class ModalComponent extends Component {
                 preventScrolling: true,
                 startingTop: '4%'
             }}
-            trigger={<Button node="button" disabled={!this.props.orderable} onClick={this.props.updateModalComponentHandler}>Order summary</Button>}
+            trigger={<div className='center'><Button node="button" disabled={!this.props.orderable} onClick={this.props.updateModalComponentHandler}>Order summary</Button></div>}
             >
             <div>
                 {this.props.children}

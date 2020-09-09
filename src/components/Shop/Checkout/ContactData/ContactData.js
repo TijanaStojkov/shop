@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './ContactData.css';
+import './ContactData.scss';
 import $ from 'jquery';
 
 //components
@@ -136,13 +136,10 @@ class CheckoutData extends Component{
         
         updatedFormElement.tuched = true;
         updatedOrderForm[inputIdentefier] = updatedFormElement;
-        console.log(updatedOrderForm)
         let formIsValid = true;
         for (let inputIndentifiers in updatedOrderForm){
             formIsValid = updatedOrderForm[inputIndentifiers].valid && formIsValid;
-            console.log(formIsValid)
         }
-        console.log(formIsValid)
         this.setState({
             orderForm: updatedOrderForm,
             formIsValid: formIsValid

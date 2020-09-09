@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-//images
-import shert from '../../assets/images/products/shert.jpg';
-import pants from '../../assets/images/products/pants.jpg';
-import skirt from '../../assets/images/products/skirt.jpg';
+
 //components
 import Spinner from '../UI/Spinner/Spinner';
 import Products from './Products//Products';
@@ -11,26 +8,12 @@ import Modal from '../UI/Modal/Modal';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import OrderSummary from './OrderSummary/OrderSummary';
 import Filter from '../UI/Filter/Filter';
+import Aux from '../hoc/Auxilary/Auxilary';
 //redux
 import { connect } from 'react-redux';
 //actions
-import * as actionCreators from '../../store/actions/allActions'
-
-const PRODUCTS_IMAGES = {
-    shert: shert,
-    pants: pants,
-    skirt: skirt,
-}
-const PRODUCTS_PRICES = {
-    shert: 10,
-    pants: 4.3,
-    skirt: 5.4,
-}
-const PRODUCTS_SIZES = {
-    shert: ["X", "L", "XL", "XXL"],
-    pants: ["X", "M", "XL"],
-    skirt: ["S", "X", "XXL"],
-}
+import * as actionCreators from '../../store/actions/allActions';
+import { PRODUCTS_IMAGES, PRODUCTS_SIZES, PRODUCTS_PRICES } from '../../const/const';
 
 class Shop extends Component {
     
@@ -86,7 +69,7 @@ class Shop extends Component {
             />
         }
         return (
-            <div>
+            <Aux>
                 <h1>Our shop</h1>
                 {filterProducts}
                 {productsComponent}
@@ -99,7 +82,7 @@ class Shop extends Component {
                 >
                     {ordeSummary}
                 </Modal>
-            </div>
+            </Aux>
         )
     }
 }

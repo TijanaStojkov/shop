@@ -26,6 +26,7 @@ class Orders extends Component {
                     name={order.orderData.name} 
                     deliveryMethod={order.orderData.deliveryMethod}
                     products={order.products}
+                    deleteOrder={() => this.props.deleteOrder(order.id)}
                     />
             )
         })}
@@ -50,7 +51,8 @@ const mapStateToProps = store => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrders: () => dispatch(actionCreators.fetchOrders())
+        fetchOrders: () => dispatch(actionCreators.fetchOrders()),
+        deleteOrder: (orderId) =>dispatch(actionCreators.deleteOrder(orderId))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders,axios));

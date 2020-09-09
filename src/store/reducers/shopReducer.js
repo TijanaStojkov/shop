@@ -4,24 +4,46 @@ import { updateObject } from '../utility'
 const initalState = {
     totalPrice: 0,
     products: null,
-    filterProductsList: {
-        pants:0,
-        shert:0,
-        skirt:0
-    },
+    filterProductsList: null,
     size: '',
     errorMessage: '',
     loading: false
 }
 const PRODUCTS_SIZES = {
-    shert: ["X", "L", "XL", "XXL"],
-    pants: ["X", "M", "XL"],
-    skirt: ["S", "X", "XXL"],
+    blackSkirt: ["X", "L", "XL", "XXL"],
+    pinkSkirt: ["X", "M", "XL"],
+    redSkirt: ["S", "X", "XXL"],
+    blackWhiteSkirt: ["X", "L", "M", "XXL"],
+    skirtWithFlowers: ["S", "M", "XL"],
+    liteblueShirt: ["S", "X", "XXL"],
+    blueShirt: ["X", "L", "XL", "XXL"],
+    brownPants: ["X", "M", "XL"],
+    creamPants: ["S", "X", "XXL"],
+    greenPants: ["S", "M", "XL"],
+    jeans: ["S", "X", "XXL"],
+    pisotivityShirt: ["S", "M", "XL"],
+    shirtBlackWhite: ["S", "X", "XXL"],
+    shirtLongSleeves: ["S", "M", "XL"],
+    whiteShirt: ["S", "X", "XXL"],
+    wightPants: ["S", "M", "XL"]
 }
 const PRODUCTS_PRICES = {
-    shert: 10,
-    pants: 4.3,
-    skirt: 5.4,
+    blackSkirt: 15.0,
+    pinkSkirt: 20.4,
+    redSkirt: 18.7,
+    blackWhiteSkirt: 22.5,
+    skirtWithFlowers: 22.4,
+    liteblueShirt: 20.1,
+    blueShirt: 17.3,
+    brownPants: 30.4,
+    creamPants: 35.5,
+    greenPants: 30.1,
+    jeans: 33.3,
+    pisotivityShirt: 15.8,
+    shirtBlackWhite: 20.3,
+    shirtLongSleeves: 29.4,
+    whiteShirt: 25.1,
+    wightPants: 30.0
 }
 const listProducts = (state, newProductsObject, size) => {
     if(state.size!=='' || size!==''){
@@ -44,7 +66,6 @@ const shopReducer = (state = initalState, action) => {
             
             const filterProductsListAdd = listProducts(state, newProductsAdd, '')
             const filteredProductsListAdd = filterProductsListAdd?filterProductsListAdd:newProductsAdd
-            console.log('state-add', state)
             return updateObject(state,{
                 products: newProductsAdd,
                 filterProductsList: filteredProductsListAdd,
@@ -58,7 +79,6 @@ const shopReducer = (state = initalState, action) => {
 
             const filterProductsListRemove = listProducts(state, newProductsRemove, '')
             const filteredProductsListRemove = filterProductsListRemove?filterProductsListRemove:newProductsRemove
-            console.log('state-remove', state)
             return updateObject(state,{
                 products: newProductsRemove,
                 filterProductsList: filteredProductsListRemove ,
@@ -70,8 +90,7 @@ const shopReducer = (state = initalState, action) => {
             return updateObject(state, {size: action.size, filterProductsList: filterProductsListSize})
 
         case actionTypes.SET_PRODUCTS:
-            console.log(action.products)
-            return updateObject(state, {products: action.products, filterProductsList: action.products, errorMessage: '', totalPrice: 0})
+            return updateObject(state, {products: action.products, filterProductsList: action.products, errorMessage: '', totalPrice: 0, size: ''})
 
         case actionTypes.FETCH_PRODUCTS_FAILD:
             return updateObject(state, {errorMessage: 'Fetching products faild!'})

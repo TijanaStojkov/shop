@@ -8,7 +8,7 @@ const nav = () => {
         <Navbar
         className="red lighten-3"
             alignLinks="left"
-            brand={<a className="brand-logo right " href="google.com">Logo</a>}
+            brand={<a className="brand-logo right " href="google.com">Our shop</a>}
             menuIcon={<Icon>menu</Icon>}
             options={{
                 draggable: true,

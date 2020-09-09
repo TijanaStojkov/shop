@@ -7,7 +7,6 @@ const button = (props) => (
         node="button" 
         small 
         style={{ marginRight: '5px' }}  
-        waves="light" 
         className={props.ClassName}
         onClick={props.clicked} 
         disabled={props.disabled}

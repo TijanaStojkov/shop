@@ -1,6 +1,12 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+//purchase products
+export const initPurchase = () => {
+    return {
+        type: actionTypes.INIT_PURCHASE
+    }
+}
 export const purchaseProductsStart = () => {
     return {
         type: actionTypes.PURCHASE_PRODUCTS_START
@@ -31,11 +37,8 @@ export const purchaseProducts = (orderData) => {
         })
     }
 }
-export const initPurchase = () => {
-    return {
-        type: actionTypes.INIT_PURCHASE
-    }
-}
+
+//fetch orders
 export const fetchOrdersStart = () => {
     return {
         type: actionTypes.FETCH_ORDERS_START,
@@ -60,7 +63,6 @@ export const fetchOrders = () => {
             .then ( response => {
                 const orders = []
                 for (let key in response.data){
-                    console.log(response.data[key],key,response.data)
                     orders.push ({
                         ...response.data[key],
                         id: key
@@ -71,6 +73,28 @@ export const fetchOrders = () => {
             .catch( error => {
                 dispatch (fetchOrdersFail(error))
             })
+    }
+}
+//delete order
+export const deleteOrderSuccess = () => {
+    return{
+        type: actionTypes.DELETE_ORDER_SUCCESS
+    }
+}
+export const deleteOrderfError = () => {
+    return{
+        type: actionTypes.DELETE_ORDER_ERROR
+    }
+}
+export const deleteOrder = (orderId) =>{
+    return dispatch => {
+        axios.delete('https://e-commerce-5e72e.firebaseio.com/order/'+ orderId +'.json')
+        .then(resp => {
+            dispatch(fetchOrders())
+        })
+        .catch(error => {
+            dispatch(deleteOrderfError())
+        })
     }
 }
         

@@ -6,6 +6,7 @@ import ButtonUI from '../../UI/Button/Button';
 const CheckoutSummary = (props) => {
         return(
             <Aux>
+                <h1>Your order</h1>
                 <Products 
                     order={props.order}
                     filterProductsList={props.products}

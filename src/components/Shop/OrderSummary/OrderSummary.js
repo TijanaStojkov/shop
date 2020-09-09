@@ -12,7 +12,7 @@ class orderSummary extends Component {
             <ul>
                 {productsList}
             </ul>
-            <p>Total price: {util.formatCurrency(this.props.totalPrice)}</p>
+            <p><b>Total price: {util.formatCurrency(this.props.totalPrice)}</b></p>
         </Aux>
         )
     }

@@ -1,14 +1,59 @@
 @import "./assets/scss/variables.scss";
 
+body {
+    padding-bottom: 50px;
+}
 .Card {
-    h3 {
+    h3, h5 {
         color: $primaryColor;
         margin-top: 0;
     }
+    min-height: 250px;
+    .card-image {
+        max-width: 60% !important;
+    }
+    .card-stacked {
+        .card-action {
+            padding: 9px 24px;
+        }
+    }
 }
-h1, h3 {
-    font-family: 'Permanent Marker', cursive;
+.modal {
+    border-radius: 15px !important;
+    background-color: $primaryColor !important;
+}
+h1, h3, h5 {
+    font-family: $titleFont;
 }
 h1{
     text-align: center;
+}
+//modal
+.addScroll{
+    height: 390px;
+    overflow-y: auto;
+    scrollbar-color: $primaryColor;
+    scrollbar-width: thin;
+    width: 1225px;
+}
+/* width */
+.addScroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.addScroll::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 10px;
+}
+
+/* Handle */
+.addScroll::-webkit-scrollbar-thumb {
+    background: $redColor;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.addScroll::-webkit-scrollbar-thumb:hover {
+    background: var(--yellow-main);
 }

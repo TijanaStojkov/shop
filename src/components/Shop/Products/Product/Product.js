@@ -23,6 +23,8 @@ const product = (props) => {
             ></ButtonUI>
         </span>
 ]:null
+const productName = (props.productName.charAt(0).toUpperCase()+props.productName.slice(1)).match(/[A-Z][a-z]+/g).join(' ')
+console.log(productName)
     return (
             <Col
                 m={12}
@@ -36,7 +38,7 @@ const product = (props) => {
                 header={<CardTitle image={props.productImages} />}
                 horizontal
                 >
-                <h3>{props.productName}</h3>
+                <h5>{productName}</h5>
                 <h3>{props.order}</h3>
                 <p>Quantity: {props.productQuantity}</p>
                 <p>Price: {util.formatCurrency(props.productPrices)}</p>
