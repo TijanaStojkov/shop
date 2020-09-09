@@ -5,7 +5,8 @@ const initState = {
     orders: [],
     loading: false,
     purchased: false,
-    loadingOrders: false
+    loadingOrders: false,
+    successMessage: ''
 }
 
 const orderReducer = (state=initState, action) => {
@@ -15,7 +16,7 @@ const orderReducer = (state=initState, action) => {
                 ...action.orderData,
                 id: action.orderId
             }
-            return updateObject (state, {loading: false, order: state.orders.concat(newOrder), purchased: true})
+            return updateObject (state, {loading: false, order: state.orders.concat(newOrder), purchased: true, successMessage: 'Your order was successful. We will contact you as soon as possible.'})
             
         case actionTypes.PURCHASE_PRODUCTS_FAIL:
             return updateObject (state, {loading: false})

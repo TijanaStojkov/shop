@@ -3,6 +3,19 @@
 body {
     padding-bottom: 50px;
 }
+
+h1, h3, h5 {
+    font-family: $titleFont;
+}
+h1{
+    text-align: center;
+}
+.successMesage {
+    padding:5px 15px;
+    background-color: $primaryColor;
+    color:whitesmoke;
+    border: 1px solid gray
+}
 .Card {
     h3, h5 {
         color: $primaryColor;
@@ -18,17 +31,11 @@ body {
         }
     }
 }
+//modal
 .modal {
     border-radius: 15px !important;
     background-color: $primaryColor !important;
 }
-h1, h3, h5 {
-    font-family: $titleFont;
-}
-h1{
-    text-align: center;
-}
-//modal
 .addScroll{
     height: 390px;
     overflow-y: auto;

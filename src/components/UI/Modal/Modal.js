@@ -11,7 +11,7 @@ class ModalComponent extends Component {
     }
     
     render () {
-        return (
+        const modal = this.props.orderable?
         <Modal
             actions={[
                 <span key='1'><Button flat modal="close" node="button" waves="light">Close</Button></span>,
@@ -40,7 +40,11 @@ class ModalComponent extends Component {
             <div>
                 {this.props.children}
             </div>
-        </Modal>
+        </Modal>:null
+        return (
+           <div> 
+               {modal}
+            </div>
         )
     }
 }

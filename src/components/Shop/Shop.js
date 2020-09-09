@@ -68,8 +68,10 @@ class Shop extends Component {
                 filterSize={this.props.filterSize}
             />
         }
+        const successMessage = this.props.successMessage!==''?<p className='successMesage'>{this.props.successMessage}</p>: null
         return (
             <Aux>
+                {successMessage}
                 <h1>Our shop</h1>
                 {filterProducts}
                 {productsComponent}
@@ -93,6 +95,7 @@ const mapStateToProps = state => {
         size: state.shopReducer.size,
         totalPrice: state.shopReducer.totalPrice,
         errorMessage: state.shopReducer.errorMessage,
+        successMessage: state.orderReducer.successMessage
     }
 };
 const mapDispatchToProps = dispatch => {
