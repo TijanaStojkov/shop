@@ -7,7 +7,8 @@ const initalState = {
     filterProductsList: null,
     size: '',
     errorMessage: '',
-    loading: false
+    loading: false,
+    building: false,
 }
 const PRODUCTS_SIZES = {
     blackSkirt: ["X", "L", "XL", "XXL"],
@@ -70,6 +71,7 @@ const shopReducer = (state = initalState, action) => {
                 products: newProductsAdd,
                 filterProductsList: filteredProductsListAdd,
                 totalPrice: state.totalPrice + PRODUCTS_PRICES[action.productName],
+                building: true,
             })
 
         case actionTypes.REMOVE_PRODUCT:
@@ -82,7 +84,8 @@ const shopReducer = (state = initalState, action) => {
             return updateObject(state,{
                 products: newProductsRemove,
                 filterProductsList: filteredProductsListRemove ,
-                totalPrice: state.totalPrice - PRODUCTS_PRICES[action.productName]
+                totalPrice: state.totalPrice - PRODUCTS_PRICES[action.productName],
+                building: true,
             })
             
         case actionTypes.FILTER_SIZE:
@@ -90,7 +93,7 @@ const shopReducer = (state = initalState, action) => {
             return updateObject(state, {size: action.size, filterProductsList: filterProductsListSize})
 
         case actionTypes.SET_PRODUCTS:
-            return updateObject(state, {products: action.products, filterProductsList: action.products, errorMessage: '', totalPrice: 0, size: ''})
+            return updateObject(state, {products: action.products, filterProductsList: action.products, errorMessage: '', totalPrice: 0, size: '', building: false})
 
         case actionTypes.FETCH_PRODUCTS_FAILD:
             return updateObject(state, {errorMessage: 'Fetching products faild!'})

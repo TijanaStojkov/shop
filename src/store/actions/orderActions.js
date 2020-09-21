@@ -2,11 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
 //purchase products
-export const initPurchase = () => {
-    return {
-        type: actionTypes.INIT_PURCHASE
-    }
-}
+
 export const purchaseProductsStart = () => {
     return {
         type: actionTypes.PURCHASE_PRODUCTS_START
@@ -25,10 +21,10 @@ export const PurchaseProductsFail = (error) => {
         error: error
     }
 }
-export const purchaseProducts = (orderData) => {
+export const purchaseProducts = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseProductsStart());
-        axios.post('https://e-commerce-5e72e.firebaseio.com/order.json', orderData)
+        axios.post('https://e-commerce-5e72e.firebaseio.com/order.json?auth='+token, orderData)
         .then(response => {
             dispatch(PurchaseProductsSuccess(response.data.name, orderData))
         })
@@ -56,10 +52,11 @@ export const fetchOrdersFail = (error) => {
         error: error
     }
 }
-export const fetchOrders = () => {
+export const fetchOrders = (token, userId) => {
+    const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"'
     return dispatch => {
         dispatch(fetchOrdersStart())
-        axios.get('https://e-commerce-5e72e.firebaseio.com/order.json')
+        axios.get('https://e-commerce-5e72e.firebaseio.com/order.json'+queryParams)
             .then ( response => {
                 const orders = []
                 for (let key in response.data){
@@ -86,15 +83,23 @@ export const deleteOrderfError = () => {
         type: actionTypes.DELETE_ORDER_ERROR
     }
 }
-export const deleteOrder = (orderId) =>{
+export const deleteOrder = (orderId, token) =>{
+    console.log(orderId)
     return dispatch => {
-        axios.delete('https://e-commerce-5e72e.firebaseio.com/order/'+ orderId +'.json')
+        axios.delete('https://e-commerce-5e72e.firebaseio.com/order/'+ orderId +'.json?auth='+token)
         .then(resp => {
             dispatch(fetchOrders())
         })
         .catch(error => {
             dispatch(deleteOrderfError())
         })
+    }
+}
+
+//delete message
+export const clearMessage = () => {
+    return {
+        type: actionTypes.CLEAR_MESSAGE
     }
 }
         

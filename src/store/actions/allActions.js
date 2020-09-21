@@ -12,6 +12,13 @@ export {
     purchaseProducts,
     purchaseProductsStart,
     fetchOrders,
-    initPurchase,
     deleteOrder,
-} from './orderActions'
+    clearMessage,
+} from './orderActions';
+
+export {
+    auth,
+    logout,
+    setAuthRedirect,
+    authCheckState,
+} from './authActions'

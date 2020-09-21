@@ -24,7 +24,6 @@ const product = (props) => {
         </span>
 ]:null
 const productName = (props.productName.charAt(0).toUpperCase()+props.productName.slice(1)).match(/[A-Z][a-z]+/g).join(' ')
-console.log(productName)
     return (
             <Col
                 m={12}

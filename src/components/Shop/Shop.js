@@ -36,9 +36,16 @@ class Shop extends Component {
     componentDidMount () {
         this.props.initProducts()
     }
+    componentWillUnmount() {
+        this.props.clearMessage()
+    }
     orderHandler = () => {
-        this.props.initPurchase();
-        this.props.history.push('/checkout')
+        if(this.props.isAuth){
+            this.props.history.push('/checkout')
+        }else{
+            this.props.setAuthRedirect('/checkout')
+            this.props.history.push('/auth') 
+        }
        }
     addProduct = (productName) => {
         this.props.addProduct(productName);
@@ -81,6 +88,7 @@ class Shop extends Component {
                     totalPrice={this.props.totalPrice}
                     orderable={this.updatePurchasable(this.props.products)}
                     orderHandler={this.orderHandler}
+                    isAuth={this.props.isAuth}
                 >
                     {ordeSummary}
                 </Modal>
@@ -95,7 +103,8 @@ const mapStateToProps = state => {
         size: state.shopReducer.size,
         totalPrice: state.shopReducer.totalPrice,
         errorMessage: state.shopReducer.errorMessage,
-        successMessage: state.orderReducer.successMessage
+        successMessage: state.orderReducer.successMessage,
+        isAuth: state.authReducer.token!==null,
     }
 };
 const mapDispatchToProps = dispatch => {
@@ -104,7 +113,8 @@ const mapDispatchToProps = dispatch => {
         removeProduct: (productName) => dispatch(actionCreators.removeProduct(productName)),
         filterSize: (size) => dispatch(actionCreators.filterSize(size)),
         initProducts: () => dispatch(actionCreators.initProducts()),
-        initPurchase: () => dispatch(actionCreators.initPurchase()),
+        setAuthRedirect: (path) => dispatch(actionCreators.setAuthRedirect(path)),
+        clearMessage: () => dispatch(actionCreators.clearMessage())
     }
 }
 

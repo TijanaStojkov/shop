@@ -14,7 +14,7 @@ import * as actionCreators from '../../../store/actions/allActions';
 class Orders extends Component {
    
     componentDidMount () {
-        this.props.fetchOrders()
+        this.props.fetchOrders(this.props.token, this.props.userId)
     }
     render() {
         let orders = this.props.orders?
@@ -26,7 +26,7 @@ class Orders extends Component {
                     name={order.orderData.name} 
                     deliveryMethod={order.orderData.deliveryMethod}
                     products={order.products}
-                    deleteOrder={() => this.props.deleteOrder(order.id)}
+                    deleteOrder={() => this.props.deleteOrder(order.id, this.props.token)}
                     />
             )
         })}
@@ -43,16 +43,18 @@ class Orders extends Component {
         )
     }
 }
-const mapStateToProps = store => {
+const mapStateToProps = state => {
     return {
-        orders: store.orderReducer.orders,
-        loading: store.orderReducer.loadingOrders
+        orders: state.orderReducer.orders,
+        loading: state.orderReducer.loadingOrders,
+        token: state.authReducer.token,
+        userId: state.authReducer.userId
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrders: () => dispatch(actionCreators.fetchOrders()),
-        deleteOrder: (orderId) =>dispatch(actionCreators.deleteOrder(orderId))
+        fetchOrders: (token,userId) => dispatch(actionCreators.fetchOrders(token,userId)),
+        deleteOrder: (orderId, token) => dispatch(actionCreators.deleteOrder(orderId, token))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders,axios));

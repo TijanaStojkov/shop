@@ -33,6 +33,9 @@ class Checkout extends Component{
             const purchasedRedirect =  this.props.purchased? <Redirect to='/'/>:null;
             summary =  <div>
                             {purchasedRedirect}
+                            <Route 
+                                path={this.props.match.path + '/contact-data'} 
+                                component={ContactData} />
                             <CheckoutSummary
                                 order={this.state.order}
                                 products={this.props.products}
@@ -42,9 +45,6 @@ class Checkout extends Component{
                                 onCheckoutCancle={this.onCheckoutCancle}
                                 onCheckoutContinue={this.onCheckoutContinue}
                             />
-                             <Route 
-                                path={this.props.match.path + '/contact-data'} 
-                                component={ContactData} />
                         </div>
         }
         return(

@@ -1,8 +1,7 @@
 import React from 'react';
 import { CollapsibleItem } from 'react-materialize';
 import util from '../../../hoc/Currency/Currency';
-import {  Button } from 'react-materialize';
-import product from '../../Products/Product/Product';
+import { Button } from 'react-materialize';
 
 const order = (props) => {
     let productsArray = [];

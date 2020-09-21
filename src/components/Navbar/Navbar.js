@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Navbar, Icon } from 'react-materialize';
 import { NavLink } from 'react-router-dom';
-import './Navbar.scss'
+import './Navbar.scss';
+import { connect } from 'react-redux';
 
-const nav = () => {
-    return (
-        <Navbar
-        className="red lighten-3"
+class Nav extends Component {
+    render(){
+        let classes = ['lighten-3'];
+        if (this.props.isAuth){
+            classes.push('green')
+        }else{
+            classes.push('red')
+        }
+        return(
+<Navbar
+        className={classes.join(' ')}
             alignLinks="left"
             brand={<a className="brand-logo right " href="/">Our shop</a>}
-            menuIcon={<Icon>menu</Icon>}
+            menuIcon={<Icon>menu</Icon>} 
             options={{
                 draggable: true,
                 edge: 'left',
@@ -19,13 +27,25 @@ const nav = () => {
                 onOpenEnd: null,
                 onOpenStart: null,
                 outDuration: 200,
-                preventScrolling: true
+                preventScrolling: true,
             }}
             >
-                <NavLink to='/' exact>Shop</NavLink>
-                <NavLink to='/Orders'>Orders</NavLink>
+                <NavLink className='sidenav-close' to='/' exact>Shop</NavLink>
+                
+                {this.props.isAuth?
+                <NavLink className='sidenav-close' to='/orders'>Your orders</NavLink>
+                :null}
+                {this.props.isAuth?
+                <NavLink className='sidenav-close' to='/logout'>Log out</NavLink>
+                :<NavLink className='sidenav-close' to='/auth'>Log in</NavLink>}
+                
         </Navbar>
-    )
+        )
+    }
 }
-
-export default nav;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.authReducer.token!==null,
+    }
+}
+export default connect(mapStateToProps)(Nav);

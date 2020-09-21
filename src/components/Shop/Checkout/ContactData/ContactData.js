@@ -125,8 +125,9 @@ class CheckoutData extends Component{
             products: this.props.products,
             price: this.props.totalPrice,
             orderData: formData,
+            userId: this.props.userId,
         }
-        this.props.purchaseProducts(products)
+        this.props.purchaseProducts(products, this.props.token)
     }
     inputChangedHandler = (event, inputIdentefier) => {
         const updatedOrderForm = {...this.state.orderForm};
@@ -203,11 +204,13 @@ const mapStateToProps = state => {
         products: state.shopReducer.products,
         totalPrice: state.shopReducer.totalPrice,
         loading: state.shopReducer.loading,
+        token: state.authReducer.token,
+        userId: state.authReducer.userId
     }
 }
 const mapDispachToProps = dispatch =>{
     return {
-        purchaseProducts: (orderData) => dispatch(actionCreators.purchaseProducts(orderData))
+        purchaseProducts: (orderData,token) => dispatch(actionCreators.purchaseProducts(orderData,token))
     }
 }
 export default connect(mapStateToProps, mapDispachToProps)(withErrorHandler(CheckoutData,axios));

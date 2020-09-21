@@ -25,7 +25,7 @@ const orderReducer = (state=initState, action) => {
             return updateObject (state, {loading: true})
 
         case actionTypes.INIT_PURCHASE:
-            return updateObject (state, {purchased: false})
+            return updateObject (state, {purchased: true})
 
         case actionTypes.PURCHASE_PRODUCTS:
             return updateObject (state, {purchased: false})
@@ -39,6 +39,9 @@ const orderReducer = (state=initState, action) => {
         case actionTypes.FETCH_ORDERS_FAIL:
             return updateObject (state, { error: action.error.message, loadingOrders: false})
 
+        case actionTypes.CLEAR_MESSAGE:
+            return updateObject (state, { successMessage: ''})
+            
         default:
             return state
     }
