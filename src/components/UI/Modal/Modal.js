@@ -3,13 +3,8 @@ import { Modal, Button } from 'react-materialize';
 
 class ModalComponent extends Component {
     shouldComponentUpdate (nextProps, nextState) {
-        //console.log(this.props.orderable, nextProps.orderable);
-        //console.log(this.props.children, nextProps.children)
         return (this.props.orderable !== nextProps.orderable || this.props.children !== nextProps.children)
     }
-    componentDidUpdate (){
-    }
-    
     render () {
         const modal = this.props.orderable?
         <Modal
