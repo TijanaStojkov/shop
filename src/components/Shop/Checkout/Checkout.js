@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 
 
 class Checkout extends Component{
-    
     state = {
         orderable: false,
         errorMessage: "",

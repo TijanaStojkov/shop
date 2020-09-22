@@ -70,7 +70,6 @@ class Auth extends Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(this.props.authRedirectPath)
         this.props.auth(this.state.controls.email.value,this.state.controls.password.value, this.state.isSignup)
     }
     switchAuthModeHandler = (event) => {
@@ -113,7 +112,6 @@ class Auth extends Component {
         if(this.props.isAuth){
             redirect = <Redirect to={this.props.authRedirectPath}/>
         }
-        console.log(this.props.isAuth)
 
         return (
             <div style={{padding: '20px'}} >
