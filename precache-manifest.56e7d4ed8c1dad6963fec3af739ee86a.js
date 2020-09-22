@@ -1,31 +1,63 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dd69cd75079eddb3ed76778357a2c280",
+    "revision": "b21494e636ca6e2481a5849b1c420030",
     "url": "/shop/index.html"
   },
   {
-    "revision": "f025ad3902e12cd3d717",
+    "revision": "8f5602d6dfa1b9e4c42a",
     "url": "/shop/static/css/2.2623327d.chunk.css"
   },
   {
-    "revision": "cb3da75f3949fdd2f81c",
-    "url": "/shop/static/css/main.5b6032e0.chunk.css"
+    "revision": "19d72fbc9f3c0d1a072c",
+    "url": "/shop/static/css/3.7340a074.chunk.css"
   },
   {
-    "revision": "f025ad3902e12cd3d717",
-    "url": "/shop/static/js/2.fcfb2420.chunk.js"
+    "revision": "d1749048a3b21e83473c",
+    "url": "/shop/static/css/4.79b10287.chunk.css"
   },
   {
-    "revision": "355b524db3601e048bb3ad7e03d77234",
-    "url": "/shop/static/js/2.fcfb2420.chunk.js.LICENSE.txt"
+    "revision": "b6da5da3b937391783c4",
+    "url": "/shop/static/css/main.8ea7c534.chunk.css"
   },
   {
-    "revision": "cb3da75f3949fdd2f81c",
-    "url": "/shop/static/js/main.3110a94c.chunk.js"
+    "revision": "8f5602d6dfa1b9e4c42a",
+    "url": "/shop/static/js/2.24846b3c.chunk.js"
   },
   {
-    "revision": "f255667955cb890e3272",
-    "url": "/shop/static/js/runtime-main.5d65f167.js"
+    "revision": "d14eab4440e732fdc004e91ed7851020",
+    "url": "/shop/static/js/2.24846b3c.chunk.js.LICENSE.txt"
+  },
+  {
+    "revision": "19d72fbc9f3c0d1a072c",
+    "url": "/shop/static/js/3.16c9f11e.chunk.js"
+  },
+  {
+    "revision": "d1749048a3b21e83473c",
+    "url": "/shop/static/js/4.ce904ddf.chunk.js"
+  },
+  {
+    "revision": "bfbc02c60ce9ff7fa83d",
+    "url": "/shop/static/js/5.455c32d5.chunk.js"
+  },
+  {
+    "revision": "c6cec977178dd156e550",
+    "url": "/shop/static/js/6.06dff155.chunk.js"
+  },
+  {
+    "revision": "b7c7f3b4590a95bf431c",
+    "url": "/shop/static/js/7.7acde4fd.chunk.js"
+  },
+  {
+    "revision": "97c7eb2bcee0a6fc840a51ef54eeeb58",
+    "url": "/shop/static/js/7.7acde4fd.chunk.js.LICENSE.txt"
+  },
+  {
+    "revision": "b6da5da3b937391783c4",
+    "url": "/shop/static/js/main.f1d15be2.chunk.js"
+  },
+  {
+    "revision": "e18fc760481a700b0d58",
+    "url": "/shop/static/js/runtime-main.1caf92f6.js"
   },
   {
     "revision": "a4f58e436da647c3b8fd5a063bfce9f6",

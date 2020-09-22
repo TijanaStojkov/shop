@@ -1,0 +1,2 @@
+(this["webpackJsonpe-commerce"]=this["webpackJsonpe-commerce"]||[]).push([[5],{162:function(e,t,n){"use strict";n.r(t);var c=n(8),r=n(9),u=n(11),o=n(10),a=n(12),i=n(0),s=n.n(i),b=n(18),p=n(6),f=n(22),l=function(e){function t(){return Object(c.a)(this,t),Object(u.a)(this,Object(o.a)(t).apply(this,arguments))}return Object(a.a)(t,e),Object(r.a)(t,[{key:"render",value:function(){return s.a.createElement(p.a,{to:"/"})}}]),t}(i.Component);t.default=Object(b.b)(null,(function(e){return{logout:function(){return e(f.i())}}}))(l)}}]);
+//# sourceMappingURL=5.455c32d5.chunk.js.map
