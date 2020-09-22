@@ -7,10 +7,10 @@ const button = (props) => (
         node="button" 
         small 
         style={{ marginRight: '5px' }}  
-        className={props.ClassName}
+        className={props.class}
         onClick={props.clicked} 
         disabled={props.disabled}
-        > <Icon>{props.textOrIcon}</Icon>{props.text} </Button>
+        > {props.icon?<Icon>{props.icon}</Icon>:null}{props.text} </Button>
 )
 
 export default button;

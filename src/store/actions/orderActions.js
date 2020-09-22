@@ -83,12 +83,13 @@ export const deleteOrderfError = () => {
         type: actionTypes.DELETE_ORDER_ERROR
     }
 }
-export const deleteOrder = (orderId, token) =>{
+export const deleteOrder = (orderId, token, userId) =>{
     console.log(orderId)
     return dispatch => {
         axios.delete('https://e-commerce-5e72e.firebaseio.com/order/'+ orderId +'.json?auth='+token)
         .then(resp => {
-            dispatch(fetchOrders())
+            dispatch(deleteOrderSuccess())
+            dispatch(fetchOrders(token, userId))
         })
         .catch(error => {
             dispatch(deleteOrderfError())

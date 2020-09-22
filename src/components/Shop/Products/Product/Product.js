@@ -10,16 +10,16 @@ const product = (props) => {
     const actionButtons = !props.order?[
         <span key='1'>
             <ButtonUI
-                ClassName = 'teal lighten-3'
+                class = 'teal lighten-3'
                 clicked = {() => props.addProduct(props.productName)}
-                textOrIcon = 'add'
+                icon = 'add'
             ></ButtonUI>
         </span>,
         <span key='2'>
             <ButtonUI
-                ClassName = 'red lighten-3'
+                class = 'red lighten-3'
                 clicked = {() => props.removeProduct(props.productName)}
-                textOrIcon = 'remove'
+                icon = 'remove'
             ></ButtonUI>
         </span>
 ]:null

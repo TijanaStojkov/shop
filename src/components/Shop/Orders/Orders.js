@@ -26,7 +26,7 @@ class Orders extends Component {
                     name={order.orderData.name} 
                     deliveryMethod={order.orderData.deliveryMethod}
                     products={order.products}
-                    deleteOrder={() => this.props.deleteOrder(order.id, this.props.token)}
+                    deleteOrder={() => this.props.deleteOrder(order.id, this.props.token, this.props.userId)}
                     />
             )
         })}
@@ -54,7 +54,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchOrders: (token,userId) => dispatch(actionCreators.fetchOrders(token,userId)),
-        deleteOrder: (orderId, token) => dispatch(actionCreators.deleteOrder(orderId, token))
+        deleteOrder: (orderId, token, userId) => dispatch(actionCreators.deleteOrder(orderId, token, userId))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders,axios));

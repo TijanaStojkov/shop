@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utility'
+import { updateObject } from '../utility';
+import { PRODUCTS_IMAGES, PRODUCTS_SIZES, PRODUCTS_PRICES } from '../../const/const';
 
 const initalState = {
     totalPrice: 0,
@@ -10,42 +11,7 @@ const initalState = {
     loading: false,
     building: false,
 }
-const PRODUCTS_SIZES = {
-    blackSkirt: ["X", "L", "XL", "XXL"],
-    pinkSkirt: ["X", "M", "XL"],
-    redSkirt: ["S", "X", "XXL"],
-    blackWhiteSkirt: ["X", "L", "M", "XXL"],
-    skirtWithFlowers: ["S", "M", "XL"],
-    liteblueShirt: ["S", "X", "XXL"],
-    blueShirt: ["X", "L", "XL", "XXL"],
-    brownPants: ["X", "M", "XL"],
-    creamPants: ["S", "X", "XXL"],
-    greenPants: ["S", "M", "XL"],
-    jeans: ["S", "X", "XXL"],
-    pisotivityShirt: ["S", "M", "XL"],
-    shirtBlackWhite: ["S", "X", "XXL"],
-    shirtLongSleeves: ["S", "M", "XL"],
-    whiteShirt: ["S", "X", "XXL"],
-    wightPants: ["S", "M", "XL"]
-}
-const PRODUCTS_PRICES = {
-    blackSkirt: 15.0,
-    pinkSkirt: 20.4,
-    redSkirt: 18.7,
-    blackWhiteSkirt: 22.5,
-    skirtWithFlowers: 22.4,
-    liteblueShirt: 20.1,
-    blueShirt: 17.3,
-    brownPants: 30.4,
-    creamPants: 35.5,
-    greenPants: 30.1,
-    jeans: 33.3,
-    pisotivityShirt: 15.8,
-    shirtBlackWhite: 20.3,
-    shirtLongSleeves: 29.4,
-    whiteShirt: 25.1,
-    wightPants: 30.0
-}
+
 const listProducts = (state, newProductsObject, size) => {
     if(state.size!=='' || size!==''){
         const selected = size!==''?size: state.size;
@@ -76,7 +42,7 @@ const shopReducer = (state = initalState, action) => {
 
         case actionTypes.REMOVE_PRODUCT:
             const newProductsRemove = {...state.products};
-            const newProductCountRemove = newProductsRemove[action.productName] - 1;
+            const newProductCountRemove = newProductsRemove[action.productName]===0?newProductsRemove[action.productName]:newProductsRemove[action.productName] - 1;
             newProductsRemove[action.productName] = newProductCountRemove;
 
             const filterProductsListRemove = listProducts(state, newProductsRemove, '')

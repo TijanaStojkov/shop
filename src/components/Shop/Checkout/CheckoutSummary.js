@@ -13,8 +13,8 @@ const CheckoutSummary = (props) => {
                     productImages={props.productImages}
                     productPrices={props.productPrices}
                     productSizes={props.productSizes}/>
-                    <ButtonUI ClassName = 'red lighten-3' clicked={props.onCheckoutCancle} text='Cancle' textOrIcon=''></ButtonUI>
-                    <ButtonUI ClassName = 'green lighten-3' clicked={props.onCheckoutContinue} text = 'Continue' textOrIcon=''/>
+                    <ButtonUI class='red lighten-3' clicked={props.onCheckoutCancle} text='Cancle' />
+                    <ButtonUI class='green lighten-3' clicked={props.onCheckoutContinue} text = 'Continue' />
             </Aux>
         )
 }

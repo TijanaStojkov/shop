@@ -164,9 +164,8 @@ class CheckoutData extends Component{
                         tuched={formElement.config.tuched} />
                ))}
                 <ButtonUI  
-                        ClassName = 'green lighten-2'
-                        text = 'Order'
-                        textOrIcon = ''
+                        class='green lighten-2'
+                        text='Order'
                         disabled={!this.state.formIsValid}
                     />
             </form>
