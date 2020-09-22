@@ -16,6 +16,9 @@ import { Row, Col } from 'react-materialize';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../../store/actions/allActions';
 
+//utility
+import { checkValidity } from '../../../../utility/validity';
+
 class CheckoutData extends Component{
     state = {
         orderForm: {
@@ -102,19 +105,6 @@ class CheckoutData extends Component{
         },
         formIsValid: false,
     }
-    checkValidity (value,rules){
-        let isValid = true
-        if (rules.required){
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength){
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength){
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        return isValid
-    }
     orderHandler = (e) => {
         e.preventDefault()
         const formData = {};
@@ -133,7 +123,7 @@ class CheckoutData extends Component{
         const updatedOrderForm = {...this.state.orderForm};
         const updatedFormElement = {...updatedOrderForm[inputIdentefier]};
         updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity (updatedFormElement.value,updatedFormElement.validation)
+        updatedFormElement.valid = checkValidity (updatedFormElement.value,updatedFormElement.validation)
         
         updatedFormElement.tuched = true;
         updatedOrderForm[inputIdentefier] = updatedFormElement;

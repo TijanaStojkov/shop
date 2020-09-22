@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import { Button } from 'react-materialize';
-import InputComponent from '../UI/Forms/Input/Input';
 import './Auth.scss';
+
+//materialize
+import { Button } from 'react-materialize';
+
+//redux
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/allActions';
-import Spinner from '../UI/Spinner/Spinner';
+
+//components
 import { Redirect } from 'react-router-dom';
+import InputComponent from '../UI/Forms/Input/Input';
+import Spinner from '../UI/Spinner/Spinner';
+
+//utility
+import { checkValidity } from '../../utility/validity';
 
 class Auth extends Component {
     state = {
@@ -45,26 +54,13 @@ class Auth extends Component {
             this.props.setAuthRedirect('/')
         }
     }
-    checkValidity (value,rules){
-        let isValid = true
-        if (rules.required){
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength){
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength){
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        return isValid
-    }
     inputChangedHandler = (event, controlName) => {
         const updatedControls = {
             ...this.state.controls,
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value,this.state.controls[controlName].validation),
+                valid: checkValidity(event.target.value,this.state.controls[controlName].validation),
                 tuched: true,
             }
         }
