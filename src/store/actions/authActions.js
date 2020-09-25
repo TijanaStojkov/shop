@@ -6,11 +6,12 @@ export const authStart = () => {
         type: actionTypes.AUTH_START
     }
 }
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, isSignup) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
         userId: userId,
+        isSignup: isSignup,
     }
 }
 export const authFail = (error) => {
@@ -54,7 +55,7 @@ export const auth = (email, password, isSignup) => {
             localStorage.setItem('expirationTime',expirationTime)
             localStorage.setItem('id',response.data.localId)
 
-            dispatch(authSuccess(response.data.idToken, response.data.localId))
+            dispatch(authSuccess(response.data.idToken, response.data.localId, isSignup))
             dispatch(checkAuthTimeout(response.data.expiresIn))
         })
         .catch( error => {

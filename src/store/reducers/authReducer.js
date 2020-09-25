@@ -14,7 +14,11 @@ const authReducer = ( state= initState, action) => {
         case actionTypes.AUTH_START:
             return updateObject (state,{loading: true, error: null})
         case actionTypes.AUTH_SUCCESS:
-            return updateObject (state,{loading: false, error: null, token: action.token, userId: action.userId})
+            if(!action.isSignup){
+                return updateObject (state,{loading: false, error: null, token: action.token, userId: action.userId})
+            }else{
+                return updateObject (state,{loading: false, error: null})
+            }
         case actionTypes.AUTH_FAIL:
             return updateObject (state,{loading: false, error: action.error})
         case actionTypes.AUTH_LOGOUT:
