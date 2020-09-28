@@ -16,7 +16,7 @@ class Nav extends Component {
 <Navbar
         className={classes.join(' ')}
             alignLinks="left"
-            brand={<a className="brand-logo right " href="/">Our shop</a>}
+            brand={<NavLink className="brand-logo right " to='/' exact>Our Shop</NavLink>}
             menuIcon={<Icon>menu</Icon>} 
             options={{
                 draggable: true,
