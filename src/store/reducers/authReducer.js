@@ -7,6 +7,7 @@ const initState = {
     loading: false,
     error: null,
     authRedirectPath:'/',
+    successMessage: null
 }
 
 const authReducer = ( state= initState, action) => {
@@ -15,9 +16,9 @@ const authReducer = ( state= initState, action) => {
             return updateObject (state,{loading: true, error: null})
         case actionTypes.AUTH_SUCCESS:
             if(!action.isSignup){
-                return updateObject (state,{loading: false, error: null, token: action.token, userId: action.userId})
+                return updateObject (state,{loading: false, error: null, token: action.token, userId: action.userId, })
             }else{
-                return updateObject (state,{loading: false, error: null})
+                return updateObject (state,{loading: false, error: null, successMessage: 'You have successfully signed up'})
             }
         case actionTypes.AUTH_FAIL:
             return updateObject (state,{loading: false, error: action.error})

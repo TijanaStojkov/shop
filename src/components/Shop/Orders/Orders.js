@@ -17,6 +17,7 @@ class Orders extends Component {
         this.props.fetchOrders(this.props.token, this.props.userId)
     }
     render() {
+        
         let orders = this.props.orders?
         <Collapsible accordion popout >
         {this.props.orders.map(order => {
@@ -31,13 +32,19 @@ class Orders extends Component {
             )
         })}
         </Collapsible>: null
-           
+                    let noOrdersMessage = null;
+
         if(this.props.loading){
             orders = <Spinner/>
+        }else{
+        if(this.props.orders.length===0){
+            noOrdersMessage='You have no orders'
+        }
         }
         return (
             <Aux>
                 <h3>Orders</h3>
+                {noOrdersMessage}
                 {orders}
             </Aux>
         )

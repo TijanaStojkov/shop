@@ -105,20 +105,31 @@ class Auth extends Component {
             form = <Spinner/>
         };
         let errorMessage = null;
+        const errorMessageText = 
+            this.props.error==='EMAIL_EXISTS'?'Email already exists': 
+            this.props.error==='WEAK_PASSWORD : Password should be at least 6 characters'?'Password must be at least 6 characters long': 
+            this.props.error==='EMAIL_NOT_FOUND'?'The email address or password is incorrect':
+            this.props.error==='INVALID_PASSWORD'?'Invalid password':null
+
         if(this.props.error){
-            errorMessage = <p className='red lighten-3' style={{padding: "5px"}}>{this.props.error==='EMAIL_EXISTS'?'Email already exists': null}</p>
+            errorMessage = <p className='red lighten-3' style={{padding: "5px"}}>{errorMessageText}</p>
+        }
+        let successMessage = null
+        if(this.props.successMessage){
+            successMessage = <p className='green lighten-3' style={{padding: "5px"}}>{this.props.successMessage}</p>
         }
         let redirect = null;
         if(this.props.isAuth){
             redirect = <Redirect to={this.props.authRedirectPath}/>
         }
-
         return (
             <div style={{padding: '20px'}} >
                 {redirect}
                 {errorMessage}
+                {successMessage}
+                <h3>{this.state.isSignup?'Sign up': 'Sign in'}</h3>
                 {form}
-                <Button style={{marginTop: '10px'}} flat node="button" waves="light" onClick={this.switchAuthModeHandler}>{this.state.isSignup?'Switch to log in':'Switch to register'}</Button>
+                <Button style={{marginTop: '10px'}} flat node="button" waves="light" onClick={this.switchAuthModeHandler}>{this.state.isSignup?'Switch to sign in':'Switch to sign up'}</Button>
             </div>
         )
     }
@@ -130,6 +141,7 @@ const mapStateToProps = state => {
         isAuth: state.authReducer.token!==null,
         shopping: state.shopReducer.building,
         authRedirectPath: state.authReducer.authRedirectPath,
+        successMessage: state.authReducer.successMessage,
     }
 }
 const mapDispatchToProps = dispatch => {

@@ -36,8 +36,8 @@ class Nav extends Component {
                 <NavLink className='sidenav-close' to='/orders'>Your orders</NavLink>
                 :null}
                 {this.props.isAuth?
-                <NavLink className='sidenav-close' to='/logout'>Log out</NavLink>
-                :<NavLink className='sidenav-close' to='/auth'>Log in</NavLink>}
+                <NavLink className='sidenav-close' to='/logout'>Sign out</NavLink>
+                :<NavLink className='sidenav-close' to='/auth'>Sign in</NavLink>}
                 
         </Navbar>
         )
