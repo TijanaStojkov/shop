@@ -47,7 +47,7 @@ class Auth extends Component {
                 tuched: false
             }
         },
-        isSignup: true
+        isSignup: false
     }
     componentDidMount () {
         if(!this.props.shopping && this.props.authRedirectPath !== '/'){

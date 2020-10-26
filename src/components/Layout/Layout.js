@@ -38,12 +38,12 @@ class Layout extends Component{
     if(this.props.isAuth){
       routes = (
         <Switch>
+        <Route exact path={'/'} component={Shop}/>
         <Route path={'/checkout'} component={asyncCheckout}/>
         <Route path={'/orders'} component={asyncOrders}/>
         <Route path={'/logout'} component={asyncLogout}/>
         <Route path={'/auth'} component={asyncAuth}/>
 
-        <Route exact path={'/'} component={Shop}/>
         <Redirect to={'/'}/>
       </Switch>
       )
